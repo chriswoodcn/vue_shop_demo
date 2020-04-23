@@ -24,7 +24,7 @@ export default {
     return {
       tabs: [
         { label: '首页', icon: 'iconfont icon-shouye', path: '/home/index' },
-        { label: '搜索', icon: 'iconfont icon-fenlei', path: '/home/search' },
+        { label: '分类', icon: 'iconfont icon-fenlei', path: '/home/classify' },
         { label: '购物车', icon: 'iconfont icon-gouwuche', path: '/home/cart' },
         { label: '我的', icon: 'iconfont icon-wode', path: '/home/mine' }
       ],

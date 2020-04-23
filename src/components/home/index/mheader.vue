@@ -1,21 +1,21 @@
 <template>
-  <div class="header">
-    <slot name="left">
-      <div class="left" @click="handleLeft">
+  <div class="header" :style="headerStyle">
+    <slot name="left" @click="leftClick">
+      <div class="left">
         <i :class="data.icon"></i>
         <i class="address">城市</i>
       </div>
     </slot>
-    <slot>
-      <div class="center" @click="handleCenter">
+    <slot @click="centerClick">
+      <div class="center">
         <div class="search">
           <i class="iconfont icon-sousuo"></i>
           <p>{{ data.center }}</p>
         </div>
       </div>
     </slot>
-    <slot name="right">
-      <div class="right" @click="handleRight">
+    <slot name="right" @click="rightClick">
+      <div class="right">
         <p>{{ data.right }}</p>
       </div>
     </slot>
@@ -24,24 +24,34 @@
 
 <script>
 export default {
-  name: 'header',
+  name: 'mheader',
   props: {
     data: {
       type: Object,
       default() {
-        return { icon: 'iconfont icon-weibiaoti-3', center: '请输入宝贝名称', right: '登录' }
+        return {
+          icon: 'iconfont icon-weibiaoti-3',
+          center: '女装 春季韩版',
+          right: '登录'
+        }
       }
     },
-    mehods: {
-      handleLeft() {
-        this.$emit('leftClick')
-      },
-      handleCenter() {
-        this.$emit('centerClick')
-      },
-      handleRight() {
-        this.$emit('rightClick')
+    headerStyle: {
+      type: Object,
+      default() {
+        return {}
       }
+    }
+  },
+  mehods: {
+    leftClick() {
+      this.$emit('leftClick')
+    },
+    centerClick() {
+      this.$emit('centerClick')
+    },
+    rightClick() {
+      this.$emit('rightClick')
     }
   }
 }
@@ -58,7 +68,7 @@ export default {
   text-align center
   font-weight 700
   color #eee
-  background linear-gradient(rgba(1,1,1,.2),hsla(0,0%,100%,0))
+  background linear-gradient(rgb(235,22,37),hsla(0,0%,100%,0))
   .left
     flex 0 0 40px
     height 40px
@@ -87,6 +97,8 @@ export default {
       font-size $font-size-small
       padding 0 10px
       background-color rgba(255,255,255,.3)
+      i
+       padding-right 10px
   .right
     flex 0 0 40px
     width 40px

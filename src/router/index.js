@@ -11,12 +11,14 @@ const routes = [
     path: '/home',
     name: 'Home',
     redirect: '/home/index',
-    component: () => import('@/views/home/Home.vue'),
+    component: () => import('@/views/home/home.vue'),
     meta: { keepAlive: true },
-    children: [{ path: 'index', component: () => import(/* webpackChunkName: "home" */ '@/views/home/index/Index.vue') },
-      { path: 'cart', component: () => import(/* webpackChunkName: "cart" */ '@/views/home/cart/Cart.vue') },
-      { path: 'search', component: () => import(/* webpackChunkName: "search" */ '@/views/home/search/Search.vue') },
-      { path: 'mine', component: () => import(/* webpackChunkName: "mine" */ '@/views/mine/Mine.vue') }]
+    children: [
+      { path: 'index', component: () => import(/* webpackChunkName: "home" */ '@/views/home/index/index.vue') },
+      { path: 'cart', component: () => import(/* webpackChunkName: "cart" */ '@/views/home/cart/cart.vue') },
+      { path: 'classify', component: () => import(/* webpackChunkName: "classify" */ '@/views/home/classify/classify.vue') },
+      { path: 'mine', component: () => import(/* webpackChunkName: "mine" */ '@/views/mine/mine.vue') }
+    ]
   }
 ]
 
