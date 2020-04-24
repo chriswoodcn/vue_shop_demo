@@ -1,24 +1,18 @@
 <template>
   <div class="header" :style="headerStyle">
-    <slot name="left" @click="leftClick">
-      <div class="left">
-        <i :class="data.icon"></i>
-        <i class="address">城市</i>
+    <div class="left" @click.prevent="leftClick">
+      <i :class="data.icon"></i>
+      <i class="address">城市</i>
+    </div>
+    <div class="center" @click.prevent="centerClick">
+      <div class="search">
+        <i class="iconfont icon-sousuo"></i>
+        <p>{{ data.center }}</p>
       </div>
-    </slot>
-    <slot @click="centerClick">
-      <div class="center">
-        <div class="search">
-          <i class="iconfont icon-sousuo"></i>
-          <p>{{ data.center }}</p>
-        </div>
-      </div>
-    </slot>
-    <slot name="right" @click="rightClick">
-      <div class="right">
-        <p>{{ data.right }}</p>
-      </div>
-    </slot>
+    </div>
+    <div class="right" @click.prevent="rightClick">
+      <p>{{ data.right }}</p>
+    </div>
   </div>
 </template>
 
@@ -43,7 +37,7 @@ export default {
       }
     }
   },
-  mehods: {
+  methods: {
     leftClick() {
       this.$emit('leftClick')
     },
@@ -68,7 +62,8 @@ export default {
   text-align center
   font-weight 700
   color #eee
-  background linear-gradient(rgb(235,22,37),hsla(0,0%,100%,0))
+  background linear-gradient(rgb(235, 22, 37), hsla(0, 0%, 100%, 0))
+
   .left
     flex 0 0 40px
     height 40px
@@ -76,16 +71,20 @@ export default {
     flex-direction column
     font-size 30px
     line-height 25px
+
     i
       font-style normal
       height 20px
+
     .address
       font-size $font-size-small
+
   .center
     flex 1
     display flex
-    justify-content  center
-    align-items  center
+    justify-content center
+    align-items center
+
     .search
       display flex
       justify-content flex-start
@@ -96,9 +95,11 @@ export default {
       border-radius 5px
       font-size $font-size-small
       padding 0 10px
-      background-color rgba(255,255,255,.3)
+      background-color rgba(255, 255, 255, .3)
+
       i
-       padding-right 10px
+        padding-right 10px
+
   .right
     flex 0 0 40px
     width 40px

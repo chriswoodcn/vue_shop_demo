@@ -1,10 +1,5 @@
 import { request } from './helper'
-const urlMap = {
-  development: '/api',
-  production: 'http://vueshop.glbuys.com/api'
-}
-const URL = urlMap[process.env.NODE_ENV]
-const TOKEN = '1ec949a15fb709370f'
+import { URL, TOKEN } from '../assets/js/conf/config'
 
 export function getNavsData() {
   return request({

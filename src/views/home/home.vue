@@ -10,7 +10,7 @@
         :class="{ active: selectedIndex === index }"
         ref="tabs"
       >
-        <i slot="icon" class="icon" :class="item.icon"></i>
+        <i :class="item.icon"></i>
         <p class="text">{{ item.label }}</p>
       </div>
     </div>
@@ -23,26 +23,44 @@ export default {
   data() {
     return {
       tabs: [
-        { label: '首页', icon: 'iconfont icon-shouye', path: '/home/index' },
-        { label: '分类', icon: 'iconfont icon-fenlei', path: '/home/classify' },
-        { label: '购物车', icon: 'iconfont icon-gouwuche', path: '/home/cart' },
-        { label: '我的', icon: 'iconfont icon-wode', path: '/home/mine' }
-      ],
-      selectedIndex: 0
+        {
+          label: '首页',
+          icon: 'iconfont icon-shouye',
+          path: '/home/index'
+        },
+        {
+          label: '分类',
+          icon: 'iconfont icon-fenlei',
+          path: '/home/classify'
+        },
+        {
+          label: '购物车',
+          icon: 'iconfont icon-gouwuche',
+          path: '/home/cart'
+        },
+        {
+          label: '我的',
+          icon: 'iconfont icon-wode',
+          path: '/home/mine'
+        }
+      ]
     }
   },
   mounted() {},
-  methods: {
-    onclick(id) {
-      this.selectedIndex = id
-      this.$router.push(this.tabs[id].path)
-      this.$refs.tabs[id].style.backgroundColor = '#eee'
-      setTimeout(() => {
-        this.$refs.tabs[id].style.backgroundColor = '#ffffff'
-      }, 100)
+  computed: {
+    selectedIndex() {
+      return this.tabs.findIndex((item) => {
+        return this.$route.path.split('/')[2] === item.path.split('/')[2]
+      })
     }
   },
-  computed: {}
+  methods: {
+    onclick(id) {
+      if (id !== this.selectedIndex) {
+        this.$router.replace(this.tabs[id].path)
+      }
+    }
+  }
 }
 </script>
 
@@ -52,6 +70,7 @@ export default {
   position relative
   width 100vw
   height 100vh
+
   .bottom-tabbar
     position fixed
     z-index 999
@@ -62,6 +81,7 @@ export default {
     box-sizing border-box
     border-top 1px solid #eee
     display flex
+
     .tab
       box-sizing border-box
       flex 1
@@ -71,9 +91,11 @@ export default {
       font-weight 700
       text-align center
       padding 10px 0 0 0
+
       &.active
         color red
-      .icon
+
+      .iconfont
         display block
         font-size 22px
         height 30px

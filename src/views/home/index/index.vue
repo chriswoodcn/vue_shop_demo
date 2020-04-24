@@ -44,7 +44,8 @@ export default {
     return {
       data: [],
       options: {
-        probeType: 3
+        probeType: 3,
+        click: true
       },
       isScroll: false
     }

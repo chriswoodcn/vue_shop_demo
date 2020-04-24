@@ -1,4 +1,4 @@
-import { getNavsData, getSwiperData, getGoodsData, getRecomGoodsData } from '@/api/api'
+import { getNavsData, getSwiperData, getGoodsData, getRecomGoodsData } from '@/api/index'
 
 export default {
   namespaced: true,

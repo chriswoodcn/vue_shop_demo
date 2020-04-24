@@ -10,10 +10,10 @@ export default {
     details: {}
   },
   mutations: {
-    'SET_CLASSIFYS'(state, payload) {
+    SET_CLASSIFYS(state, payload) {
       state.classifys = payload.classifys
     },
-    'SELECT_ITEM'(state, payload) {
+    SELECT_ITEM(state, payload) {
       if (state.classifys.length > 0) {
         for (let i = 0; i < state.classifys.length; i++) {
           if (state.classifys[i].active) {
@@ -22,14 +22,15 @@ export default {
           }
         }
         state.classifys[payload.index].active = true
+        // 防止出现视图跟着引用类型数据的改变而不渲染的问题
         Vue.set(state.classifys, payload.index, state.classifys[payload.index])
       }
     },
-    'SET_GOODS'(state, payload) {
+    SET_GOODS(state, payload) {
       state.goods = payload.goods
     },
     // 选择商品属性
-    'SELECT_ATTR'(state, payload) {
+    SELECT_ATTR(state, payload) {
       if (state.attrs.length > 0) {
         for (let i = 0; i < state.attrs[payload.index].values.length; i++) {
           if (state.attrs[payload.index].values[i].active) {
@@ -42,11 +43,11 @@ export default {
       }
     },
     // 设置商品详情
-    'SET_DETAILS'(state, payload) {
+    SET_DETAILS(state, payload) {
       state.details = payload.details
     },
     // 设置商品规格
-    'SET_ATTRS'(state, payload) {
+    SET_ATTRS(state, payload) {
       state.attrs = payload.attrs
     }
   },
@@ -110,5 +111,11 @@ export default {
         }
       })
     }
+  },
+  getters: {
+    classifys: (state) => state.classifys,
+    goods: (state) => state.goods,
+    attrs: (state) => state.attrs,
+    details: (state) => state.details
   }
 }
