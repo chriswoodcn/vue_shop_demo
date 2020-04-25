@@ -8,7 +8,7 @@
         <cube-slide class="slide" ref="slide" :data="swipers" :interval="2000">
           <cube-slide-item v-for="(item, index) in swipers" :key="index">
             <a :href="item.url">
-              <img class="slide-image" v-lazy="item.image" />
+              <img class="slide-image" :src="item.image" />
             </a>
           </cube-slide-item>
           <template #dots="props">
@@ -27,6 +27,8 @@
         <div class="recommend-content">
           <mlist v-for="(item, index) in recomGoods" :data="item" :key="index"></mlist>
         </div>
+
+        <div class="bottom-line"><p>我是有底线的</p></div>
       </cube-scroll>
     </div>
   </div>
@@ -142,5 +144,24 @@ export default {
     .recommend-content
       display flex
       flex-wrap wrap
-      margin-bottom 20px
+      margin-bottom 40px
+    .bottom-line
+      position relative
+      width 50%
+      margin 0 auto
+      height 40px
+      border-top 1px solid $color-text-l
+      p
+        position absolute
+        left 50%
+        top 0
+        transform translate(-50%,-60%)
+        width 100px
+        height 40px
+        padding 0 10px
+        color $color-text-l
+        line-height 50px
+        text-align center
+        font-size  $font-size-medium
+        background-color $color-text-ll
 </style>

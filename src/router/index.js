@@ -18,7 +18,7 @@ const routes = [
       {
         path: 'index',
         name: 'index',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/home/index/index.vue'),
+        component: () => import(/* webpackChunkName: "index" */ '@/views/home/index/index.vue'),
         meta: {
           keepAlive: true,
           title: '商城'
@@ -42,6 +42,20 @@ const routes = [
             name: 'classify-item',
             component: () => import('@/views/home/classify/classify_item.vue'),
             meta: { title: '商品分类' }
+          }
+        ]
+      },
+      {
+        path: 'search',
+        name: 'search',
+        component: () => import(/* webpackChunkName: "search" */ '@/views/home/search/search.vue'),
+        meta: { title: '搜索' },
+        children: [
+          {
+            path: 'panel',
+            name: 'search-panel',
+            component: () => import('@/views/home/search/search_panel.vue'),
+            meta: { title: '搜索结果' }
           }
         ]
       },

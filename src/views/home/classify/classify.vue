@@ -1,7 +1,7 @@
 <template>
   <div class="classify">
     <div class="search-header">
-      <div class="search">
+      <div class="search" @click="$router.push('/home/search')">
         <i class="iconfont icon-sousuo"></i>
         <div class="text">女装 春季 韩版修身</div>
       </div>

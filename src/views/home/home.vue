@@ -73,7 +73,7 @@ export default {
 
   .bottom-tabbar
     position fixed
-    z-index 999
+    z-index 1
     left 0
     bottom 0
     width 100vw

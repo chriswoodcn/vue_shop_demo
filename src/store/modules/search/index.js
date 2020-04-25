@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { getClassifyData } from '../../../api/goods'
 import { getHotKeywordData, getSearchData, getAttrsData } from '../../../api/search'
 
 export default {
@@ -9,12 +10,36 @@ export default {
     priceData: {
       isHide: false,
       items: [
-        { price1: 1, price2: 50, active: false },
-        { price1: 51, price2: 99, active: false },
-        { price1: 100, price2: 300, active: false },
-        { price1: 301, price2: 1000, active: false },
-        { price1: 1001, price2: 4000, active: false },
-        { price1: 4001, price2: 9999, active: false }
+        {
+          price1: 1,
+          price2: 50,
+          active: false
+        },
+        {
+          price1: 51,
+          price2: 99,
+          active: false
+        },
+        {
+          price1: 100,
+          price2: 300,
+          active: false
+        },
+        {
+          price1: 301,
+          price2: 1000,
+          active: false
+        },
+        {
+          price1: 1001,
+          price2: 4000,
+          active: false
+        },
+        {
+          price1: 4001,
+          price2: 9999,
+          active: false
+        }
       ]
     },
     minPrice: '',
@@ -23,29 +48,34 @@ export default {
     searchData: [],
     cid: '',
     params: [],
-    total: 0
+    total: 0,
+    classifys: []
   },
   mutations: {
+    // 设置分类数据
+    SET_CLASSIFYS(state, payload) {
+      state.classifys = payload.classifys
+    },
     // 设置历史记录关键词
-    'SET_KEYWORDS'(state, payload) {
+    SET_KEYWORDS(state, payload) {
       state.historyKeywords = payload.historyKeywords
       localStorage.historyKeywords = JSON.stringify(state.historyKeywords)
     },
     // 清除搜索历史记录
-    'CLEAR_KEYWORDS'(state, payload) {
+    CLEAR_KEYWORDS(state, payload) {
       state.historyKeywords = []
       localStorage.removeItem('historyKeywords')
     },
     // 设置热门关键词
-    'SET_HOTKEYWORD'(state, payload) {
+    SET_HOTKEYWORD(state, payload) {
       state.hotKeywords = payload.hotKeywords
     },
     // 隐藏价格
-    'HIDE_PRICE'(state, payload) {
+    HIDE_PRICE(state, payload) {
       state.priceData.isHide = !state.priceData.isHide
     },
     // 选择价格
-    'SELECT_PRICE'(state, payload) {
+    SELECT_PRICE(state, payload) {
       if (state.priceData.items.length > 0) {
         for (let i = 0; i < state.priceData.items.length; i++) {
           if (i !== payload.index) {
@@ -62,32 +92,32 @@ export default {
       }
     },
     // 设置最小价格
-    'SET_MINPRICE'(state, payload) {
+    SET_MINPRICE(state, payload) {
       state.minPrice = payload.minPrice
       state.minPrice = state.minPrice.replace(/[^\d|\.]/g, '')
     },
     // 设置最大价格
-    'SET_MAXPRICE'(state, payload) {
+    SET_MAXPRICE(state, payload) {
       state.maxPrice = payload.maxPrice
       state.maxPrice = state.maxPrice.replace(/[^\d|\.]/g, '')
     },
     // 显示隐藏商品属性
-    'HIDE_ATTR'(state, payload) {
+    HIDE_ATTR(state, payload) {
       state.attrs[payload.index].isHide = !state.attrs[payload.index].isHide
       Vue.set(state.attrs, payload.index, state.attrs[payload.index])
     },
     // 选择商品属性
-    'SELECT_ATTR'(state, payload) {
+    SELECT_ATTR(state, payload) {
       state.attrs[payload.index].param[payload.index2].active = !state.attrs[payload.index].param[payload.index2].active
       Vue.set(state.attrs[payload.index].param, payload.index2, state.attrs[payload.index].param[payload.index2])
     },
     // 设置搜索结果
-    'SET_SEARCH_DATA'(state, payload) {
+    SET_SEARCH_DATA(state, payload) {
       state.searchData = payload.searchData
       state.total = payload.total
     },
     // 增加分页数据
-    'SET_SEARCH_DATA_PAGE'(state, payload) {
+    SET_SEARCH_DATA_PAGE(state, payload) {
       if (payload.searchData.length > 0) {
         for (let i = 0; i < payload.searchData.length; i++) {
           state.searchData.push(payload.searchData[i])
@@ -95,14 +125,14 @@ export default {
       }
     },
     // 设置商品分类的cid
-    'SET_CID'(state, payload) {
+    SET_CID(state, payload) {
       state.cid = payload.cid
     },
-    'SET_ATTRS'(state, payload) {
+    SET_ATTRS(state, payload) {
       state.attrs = payload.attrs
     },
     // 设置属性的值
-    'SET_PARAMS'(state, payload) {
+    SET_PARAMS(state, payload) {
       if (state.attrs.length > 0) {
         state.params = []
         for (let i = 0; i < state.attrs.length; i++) {
@@ -114,7 +144,7 @@ export default {
         }
       }
     },
-    'RESET_SCREEN'(state) {
+    RESET_SCREEN(state) {
       state.cid = ''
 
       // 重置价格
@@ -143,6 +173,20 @@ export default {
     }
   },
   actions: {
+    // 获取分类数据
+    getClassify(conText, payload) {
+      getClassifyData().then((res) => {
+        if (res.code === 200) {
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].active = false
+          }
+          conText.commit('SET_CLASSIFYS', { classifys: res.data })
+          if (payload && payload.success) {
+            payload.success()
+          }
+        }
+      })
+    },
     getHotKeyword(conText, payload) {
       getHotKeywordData().then((res) => {
         if (res.code === 200) {
@@ -153,22 +197,22 @@ export default {
     // 选择分类
     selectClassify(conText, payload) {
       // console.log(conText);
-      if (conText.rootState.goods.classifys.length > 0) {
-        for (let i = 0; i < conText.rootState.goods.classifys.length; i++) {
+      if (conText.state.classifys.length > 0) {
+        for (let i = 0; i < conText.state.classifys.length; i++) {
           if (i !== payload.index) {
-            if (conText.rootState.goods.classifys[i].active) {
-              conText.rootState.goods.classifys[i].active = false
+            if (conText.state.classifys[i].active) {
+              conText.state.classifys[i].active = false
               break
             }
           }
-          // if(conText.rootState.goods.classifys[i].active){
-          //     conText.rootState.goods.classifys[i].active=conText.rootState.goods.classifys[payload.index].active;
+          // if(conText.state.classifys[i].active){
+          //     conText.state.classifys[i].active=conText.state.classifys[payload.index].active;
           //     break;
           // }
         }
-        conText.rootState.goods.classifys[payload.index].active = !conText.rootState.goods.classifys[payload.index].active
-        Vue.set(conText.rootState.goods.classifys, payload.index, conText.rootState.goods.classifys[payload.index])
-        const cid = conText.rootState.goods.classifys[payload.index].active ? conText.rootState.goods.classifys[payload.index].cid : ''
+        conText.state.classifys[payload.index].active = !conText.state.classifys[payload.index].active
+        Vue.set(conText.state.classifys, payload.index, conText.state.classifys[payload.index])
+        const cid = conText.state.classifys[payload.index].active ? conText.state.classifys[payload.index].cid : ''
         conText.commit('SET_CID', { cid: cid })
       }
     },
@@ -178,10 +222,16 @@ export default {
         let pageNum = 0
         if (res.code === 200) {
           pageNum = res.pageinfo.pagenum
-          conText.commit('SET_SEARCH_DATA', { searchData: res.data, total: res.pageinfo.total })
+          conText.commit('SET_SEARCH_DATA', {
+            searchData: res.data,
+            total: res.pageinfo.total
+          })
         } else {
           pageNum = 0
-          conText.commit('SET_SEARCH_DATA', { searchData: [], total: 0 })
+          conText.commit('SET_SEARCH_DATA', {
+            searchData: [],
+            total: 0
+          })
         }
         if (payload.success) {
           payload.success(pageNum)
@@ -192,6 +242,9 @@ export default {
       getSearchData(payload).then((res) => {
         if (res.code === 200) {
           conText.commit('SET_SEARCH_DATA_PAGE', { searchData: res.data })
+        }
+        if (payload.success) {
+          payload.success()
         }
       })
     },
@@ -217,10 +270,10 @@ export default {
     // 筛选面板重置
     resetScreen(conText) {
       // 重置分类
-      if (conText.rootState.goods.classifys.length > 0) {
-        for (let i = 0; i < conText.rootState.goods.classifys.length; i++) {
-          if (conText.rootState.goods.classifys[i].active) {
-            conText.rootState.goods.classifys[i].active = false
+      if (conText.state.classifys.length > 0) {
+        for (let i = 0; i < conText.state.classifys.length; i++) {
+          if (conText.state.classifys[i].active) {
+            conText.state.classifys[i].active = false
             break
           }
         }
@@ -228,5 +281,18 @@ export default {
 
       conText.commit('RESET_SCREEN')
     }
+  },
+  getters: {
+    classifys: (state) => state.classifys,
+    historyKeywords: (state) => state.historyKeywords,
+    hotKeywords: (state) => state.hotKeywords,
+    priceData: (state) => state.priceData,
+    minPrice: (state) => state.minPrice,
+    maxPrice: (state) => state.maxPrice,
+    attrs: (state) => state.attrs,
+    searchData: (state) => state.searchData,
+    cid: (state) => state.cid,
+    params: (state) => state.params,
+    total: (state) => state.total
   }
 }
