@@ -65,6 +65,7 @@ export default {
     }
   },
   getters: {
+    cartData: (state) => state.cartData,
     // 计算总金额
     total(state) {
       if (state.cartData.length > 0) {

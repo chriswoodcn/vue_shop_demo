@@ -42,6 +42,9 @@ module.exports = {
         '@assets': resolve(__dirname, 'src/assets')
       }
     },
-    devtool: 'eval-source-map' // 配置开发者环境的sourceMap用于断点调试
+    devtool: 'eval-source-map', // 配置开发者环境的sourceMap用于断点调试
+    externals: {
+      BMap: 'BMap'
+    }
   }
 }

@@ -10,14 +10,19 @@ import '@/assets/css/index.styl'
 import 'amfe-flexible'
 import utils from '@/assets/js/libs'
 import VueLazyload from 'vue-lazyload'
+// import BaiduMap from 'vue-baidu-map'
+// 引入全局组件
+import Divider from '@/components/base/divider.vue'
 
+Vue.component('divider', Divider)
 Vue.config.productionTip = false
-// Vue.prototype.$config = config
 Vue.prototype.$utils = utils
 Vue.use(VueLazyload, {
   loading: require('@/assets/images/common/lazyImg.jpg')
 })
-
+// Vue.use(BaiduMap, {
+//   ak: 'zb18k7Sn55uUauHn9xqqFp0mjI5AntYx'
+// })
 new Vue({
   router,
   store,

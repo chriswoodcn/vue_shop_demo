@@ -21,7 +21,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "index" */ '@/views/home/index/index.vue'),
         meta: {
           keepAlive: true,
-          title: '商城'
+          title: 'VUE商城'
         }
       },
       {
@@ -55,7 +55,7 @@ const routes = [
             path: 'panel',
             name: 'search-panel',
             component: () => import('@/views/home/search/search_panel.vue'),
-            meta: { title: '搜索结果' }
+            meta: { title: '搜索' }
           }
         ]
       },
@@ -63,7 +63,13 @@ const routes = [
         path: 'mine',
         name: 'mine',
         component: () => import(/* webpackChunkName: "mine" */ '@/views/mine/mine.vue'),
-        meta: { keepAlive: true }
+        meta: { title: '个人中心' }
+      },
+      {
+        path: '/map',
+        name: 'map',
+        component: () => import('@/views/home/map/map.vue'),
+        meta: { title: '地图' }
       }
     ]
   },
@@ -75,17 +81,17 @@ const routes = [
     children: [
       {
         path: 'item',
-        name: 'details_item',
+        name: 'details-item',
         component: () => import('@/components/home/goods/details_item.vue')
       },
       {
         path: 'content',
-        name: 'details_content',
+        name: 'details-content',
         component: () => import('@/components/home/goods/details_content.vue')
       },
       {
         path: 'review',
-        name: 'details_review',
+        name: 'details-review',
         component: () => import('@/components/home/goods/details_review.vue')
       }
     ]

@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import baseMixins from '../../../assets/js/mixins/baseMixins'
 import Mheader from '../../../components/home/index/mheader'
 import Mnav from '../../../components/home/index/mnav'
 import Card from '../../../components/home/index/card'
@@ -42,6 +43,7 @@ import Mlist from '../../../components/home/index/mlist'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'index',
+  mixins: [baseMixins],
   data: function () {
     return {
       data: [],

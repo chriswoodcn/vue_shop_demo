@@ -71,5 +71,9 @@ export default {
         }
       })
     }
+  },
+  getters: {
+    address: (state) => state.address
   }
+
 }

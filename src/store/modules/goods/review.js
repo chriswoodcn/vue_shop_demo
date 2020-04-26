@@ -1,4 +1,4 @@
-import { getReviewsData } from '../../../api/goods/review'
+import { getReviewsData } from '../../../api/goods'
 export default {
   namespaced: true,
   state: {
@@ -37,5 +37,9 @@ export default {
         }
       })
     }
+  },
+  getters: {
+    reviews: (state) => state.reviews,
+    total: (state) => state.total
   }
 }

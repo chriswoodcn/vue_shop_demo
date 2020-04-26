@@ -1,5 +1,5 @@
 <template>
-  <div class="mlist">
+  <div class="mlist" @click="$router.push('/goods/details?gid='+(data.gid && data.gid))">
     <div class="image"><img v-lazy="data.image" /></div>
     <div class="desc">{{ data.title }}</div>
     <div class="price">¥{{ data.price }}</div>
