@@ -62,6 +62,7 @@ export default {
     }),
     goSearch(keyword) {
       const tmpKeyword = keyword || this.keyword || ''
+      if (tmpKeyword === this.$route.query.keyword) { return }
       this.keyword = tmpKeyword
       if (tmpKeyword) {
         if (this.keywords.length > 0) {
@@ -75,6 +76,8 @@ export default {
         this.SET_KEYWORDS({ historyKeywords: this.keywords })
       }
       this.$router.replace('/home/search/panel?keyword=' + tmpKeyword)
+      // 重置panel视图滚动到顶部,也可以使用事件中心派发
+      this.$children[0].scrollGoods.scrollTo(0, 0, 300)
     },
     clearHistoryKeywords() {
       console.log(this.historyKeywords)

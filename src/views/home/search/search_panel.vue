@@ -41,7 +41,7 @@
             </div>
           </div>
         </div>
-        <div class="more" v-show="searchData.length > 0 && ismore">下拉加载更多...</div>
+        <div class="more" v-show="searchData.length > 0 && ismore">上拉加载更多...</div>
         <div class="no-more" v-show="searchData.length > 0 && isnomore">没有更多了...</div>
         <div class="no-data" v-show="searchData.length <= 0">没有相关商品！</div>
       </div>
@@ -115,7 +115,6 @@
             </div>
           </div>
         </div>
-        <!--          <div style="width: 100%; height: 1.2rem;"></div>-->
       </div>
       <div class="handel-wrap">
         <div class="item">
@@ -191,7 +190,6 @@
           })
         }
       })
-      console.log(this.$parent.keyword)
     },
     mounted () {
       this.$refs.screen.addEventListener('touchmove', this._disableScreenTochmove)
@@ -244,7 +242,8 @@
         getSearch: 'search/getSearch',
         getSearchPage: 'search/getSearchPage',
         getAttrs: 'search/getAttrs',
-        resetScreen: 'search/resetScreen'
+        resetScreen: 'search/resetScreen',
+        resetSearchData: 'search/resetSearchData'
       }),
       ...mapMutations({
         HIDE_PRICE: 'search/HIDE_PRICE',
@@ -302,13 +301,6 @@
           price2: this.maxPrice,
           param: JSON.stringify(this.params)
         }
-        // console.log(this.keyword)
-        // console.log(this.otype)
-        // console.log(this.cid)
-        // console.log(this.minPrice)
-        // console.log(this.maxPrice)
-        // console.log(this.params)
-        // console.log('------------------')
         if (positions.type === 'normal') {
           this.getSearch({
             ...jsonParams,
@@ -334,9 +326,9 @@
       },
       sureSubmit () {
         this.isScreen = false
+        this.SET_PARAMS()
         this.__init()
-        this.ismore = false
-        this.isnomore = false
+        this.scrollGoods.scrollTo(0, 0, 1000)
         this.scrollGoods.off('scroll')
       },
       _singleOrder (key) {
@@ -368,6 +360,7 @@
     beforeDestroy () {
       this.$refs.screen.removeEventListener('touchmove', this._disableScreenTochmove)
       this.$refs.scrollGoods.removeEventListener('touchmove', this._disableScreenTochmove)
+      this.resetSearchData()
     }
   }
 </script>

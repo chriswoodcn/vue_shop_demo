@@ -5,7 +5,7 @@ import index from './modules/index'
 import goods from './modules/goods'
 import search from './modules/search'
 // import goodsReview from './modules/goods/review'
-// import cart from './modules/cart'
+import cart from './modules/cart'
 // import address from './modules/address'
 // import order from './modules/order'
 import createLogger from 'vuex/dist/logger'
@@ -18,9 +18,9 @@ const store = new Vuex.Store({
     // user,
     index,
     goods,
-    search
+    search,
     // goodsReview,
-    // cart,
+    cart
     // address,
     // order
   },

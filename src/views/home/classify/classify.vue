@@ -29,7 +29,7 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import IScroll from '../../../assets/js/libs/iscroll'
+import IScroll from '@/assets/js/libs/iscroll'
 
 export default {
   data() {

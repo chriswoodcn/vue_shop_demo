@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <ul class="item" v-for="(item, index) in navs" :key="index" @click="$router.push('/goods/classify/item?cid=' + item.cid)">
+    <ul class="item" v-for="(item, index) in navs" :key="index" @click="$router.push('/home/classify/item?cid=' + item.cid)">
       <li><img v-lazy="item.image" /></li>
       <li>{{ item.title }}</li>
     </ul>

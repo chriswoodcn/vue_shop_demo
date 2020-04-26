@@ -280,6 +280,10 @@ export default {
       }
 
       conText.commit('RESET_SCREEN')
+    },
+    // 重置搜索结果集
+    resetSearchData(conText) {
+      conText.commit('SET_SEARCH_DATA', { searchData: [] })
     }
   },
   getters: {

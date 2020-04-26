@@ -18,7 +18,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import IScroll from '../../../assets/js/libs/iscroll'
+import IScroll from '@/assets/js/libs/iscroll'
 
 export default {
   methods: {

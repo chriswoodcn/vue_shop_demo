@@ -40,7 +40,7 @@ const routes = [
           {
             path: 'item',
             name: 'classify-item',
-            component: () => import('@/views/home/classify/classify_item.vue'),
+            component: () => import('@/components/home/classify/classify_item.vue'),
             meta: { title: '商品分类' }
           }
         ]
@@ -64,6 +64,29 @@ const routes = [
         name: 'mine',
         component: () => import(/* webpackChunkName: "mine" */ '@/views/mine/mine.vue'),
         meta: { keepAlive: true }
+      }
+    ]
+  },
+  {
+    path: '/goods/details',
+    name: 'details',
+    component: () => import('@/views/home/goods/details.vue'),
+    redirect: '/goods/details/item',
+    children: [
+      {
+        path: 'item',
+        name: 'details_item',
+        component: () => import('@/components/home/goods/details_item.vue')
+      },
+      {
+        path: 'content',
+        name: 'details_content',
+        component: () => import('@/components/home/goods/details_content.vue')
+      },
+      {
+        path: 'review',
+        name: 'details_review',
+        component: () => import('@/components/home/goods/details_review.vue')
       }
     ]
   }
