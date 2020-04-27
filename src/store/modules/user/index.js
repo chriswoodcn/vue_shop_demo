@@ -24,11 +24,12 @@ const modules = {
     head: '',
     points: 0,
     favs: [],
-    userAddress: localStorage.userAddress ? localStorage.userAddress : '请选择'
+    userAddress: (localStorage.userAddress && localStorage.userAddress !== 'undefined') ? JSON.parse(localStorage.userAddress) : {}
   },
   mutations: {
     'SET_USERADDRESS' (state, payload) {
-      state.userAddress = localStorage.userAddress = payload.title
+      state.userAddress = { ...payload }
+      localStorage.userAddress = JSON.stringify({ ...payload })
     },
     'SET_LOGIN' (state, payload) {
       state.uid = payload.uid
@@ -227,7 +228,7 @@ const modules = {
     head: (state) => state.head,
     points: (state) => state.points,
     favs: (state) => state.favs,
-    userAddress: (state) => state.userAddress.split('').length > 3 ? state.userAddress.substr(0, 3) : state.userAddress
+    userAddress: (state) => state.userAddress.title ? state.userAddress.title.substr(0, 3) : '请选择'
   }
 }
 export default modules

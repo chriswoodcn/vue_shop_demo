@@ -6,14 +6,22 @@
     </div>
     <div class="search">
       <input type="text" v-model="searchWord" placeholder="请输入您所在的地区">
-      <i class="iconfont icon-sousuo" @click="keyword = searchWord.trim()"></i>
+      <i class="iconfont icon-sousuo" @click="searchClick"></i>
     </div>
     <div class="map-container">
       <baidu-map class="baidu-map" ak="zb18k7Sn55uUauHn9xqqFp0mjI5AntYx" :center="map.center"
-                 :zoom="map.zoom" @ready="mapReady">
+                 :zoom="map.zoom" @ready="mapReady" @click="mapClick">
         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"/>
-        <bm-local-search :auto-viewport="true" :keyword="keyword" :location="keyword" :selectFirstResult="true"
-                         @searchcomplete="searchcomplete" :panel="false"></bm-local-search>
+        <bm-geolocation ref="geolocation" anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true"
+                        :autoLocation="isAutoLocation"/>
+        <template v-if="keyword">
+          <bm-local-search :auto-viewport="true" :keyword="keyword" :location="keyword" :selectFirstResult="true"
+                           @searchcomplete="searchcomplete" :panel="false"></bm-local-search>
+        </template>
+        <bm-marker v-if="markerPoint.lng!== 0&&markerPoint.lat!== 0" :position="markerPoint" :clicking="false">
+          <bm-info-window :show="show" @close="infoWindowClose" @open="infoWindowOpen">{{formatted_address}}
+          </bm-info-window>
+        </bm-marker>
       </baidu-map>
       <div class="mask"></div>
     </div>
@@ -42,8 +50,9 @@
 <script>
   // 东丽湖阅湖苑6号楼
   import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-  import { BmNavigation, BmLocalSearch } from 'vue-baidu-map'
+  import { BmNavigation, BmLocalSearch, BmMarker, BmInfoWindow, BmGeolocation } from 'vue-baidu-map'
   import { mapMutations } from 'vuex'
+  import { getLocationInfo } from '@/api/map'
 
   export default {
     name: 'baidumap',
@@ -62,15 +71,51 @@
           province: '',
           city: '',
           lists: []
-        }
+        },
+        show: false,
+        markerPoint: {
+          lng: 0,
+          lat: 0
+        },
+        formatted_address: '',
+        isAutoLocation: false
       }
     },
     components: {
       BaiduMap,
       BmNavigation,
-      BmLocalSearch
+      BmGeolocation,
+      BmLocalSearch,
+      BmMarker,
+      BmInfoWindow
     },
-    mounted () {
+    created () {
+      // https的域名才支持了,浏览器自带的定位
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition((pos) => {
+      //     console.log(pos)
+      //     this.map.center.lat = pos.coords.latitude
+      //     this.map.center.lng = pos.coords.longitude
+      //   })
+      // }
+      // this.$createDialog({
+      //   type: 'confirm',
+      //   content: '是否自动定位获取您的模糊位置',
+      //   confirmBtn: {
+      //     text: '确定',
+      //     active: true,
+      //     href: 'javascript:;'
+      //   },
+      //   cancelBtn: {
+      //     text: '取消',
+      //     active: true,
+      //     href: 'javascript:;'
+      //   },
+      //   onConfirm: () => {
+      //     console.log(this.$refs.geolocation)
+      //     this.isAutoLocation = true
+      //   }
+      // }).show()
     },
     methods: {
       ...mapMutations({ setAddress: 'user/SET_USERADDRESS' }),
@@ -78,15 +123,64 @@
         this.map.center = '北京'
         this.map.zoom = 15
       },
+      mapClick ({ point }) {
+        this.formatted_address = ''
+        this.markerPoint = point
+        this.infoWindowOpen()
+        // 根据坐标转位置信息
+        getLocationInfo(this.markerPoint).then(res => {
+          console.log(res)
+          if (res.status === 0) {
+            this.formatted_address = res.result.formatted_address
+            this.results.province = res.result.addressComponent.province
+            this.results.city = res.result.addressComponent.city
+            const listItem = {
+              title: res.result.addressComponent.district + res.result.addressComponent.street,
+              address: this.formatted_address
+            }
+            this.results.lists = []
+            this.results.lists.push(listItem)
+            console.log(this.results)
+          } else {
+            this.$createToast(
+              {
+                type: 'txt',
+                txt: '获取地址失败,请您重新选择'
+              }
+            ).show()
+          }
+        })
+      },
+      searchClick () {
+        if (this.searchWord.trim()) {
+          this.keyword = this.searchWord.trim()
+        }
+      },
       searchcomplete (results) {
-        if (results === undefined) return
+        console.log(results)
+        if (results === undefined || results.Ir.length <= 0) {
+          this.$createToast({
+            type: 'txt',
+            txt: '您搜索的地址不存在,请重新输入'
+          }).show()
+          return
+        }
         this.$set(this.results, 'province', results.province || '')
         this.$set(this.results, 'city', results.city || '')
         this.$set(this.results, 'lists', results.Ir || '')
       },
-      handlerAddressChoose ({ title }) {
-        this.setAddress({ title })
+      handlerAddressChoose ({ title, address }) {
+        this.setAddress({
+          title,
+          address
+        })
         this.$router.replace('/home')
+      },
+      infoWindowClose () {
+        this.show = false
+      },
+      infoWindowOpen () {
+        this.show = true
       }
     }
   }
@@ -199,12 +293,11 @@
           height 20px
 
           .address-icon
-            width 50px
+            width 30px
             padding-left 10px
 
           .title
             font-size $font-size-medium
-            padding-left 10px
             no-wrap()
 
         .more-info

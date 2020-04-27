@@ -33,6 +33,14 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/baiduapi': {
+        // http://vueshop.glbuys.com/api/home/index/nav?token=1ec949a15fb709370f
+        target: 'http://api.map.baidu.com/reverse_geocoding/v3',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/baiduapi': ''
+        }
       }
     }
   },
