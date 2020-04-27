@@ -40,7 +40,7 @@ const routes = [
           {
             path: 'item',
             name: 'classify-item',
-            component: () => import('@/components/home/classify/classify_item.vue'),
+            component: () => import(/* webpackChunkName: "classify" */'@/components/home/classify/classify_item.vue'),
             meta: { title: '商品分类' }
           }
         ]
@@ -48,51 +48,185 @@ const routes = [
       {
         path: 'search',
         name: 'search',
-        component: () => import(/* webpackChunkName: "search" */ '@/views/home/search/search.vue'),
+        component: () => import(/* webpackChunkName: "search" */'@/views/home/search/search.vue'),
         meta: { title: '搜索' },
         children: [
           {
             path: 'panel',
             name: 'search-panel',
-            component: () => import('@/views/home/search/search_panel.vue'),
+            component: () => import(/* webpackChunkName: "search" */'@/views/home/search/search_panel.vue'),
             meta: { title: '搜索' }
           }
         ]
       },
       {
-        path: 'mine',
-        name: 'mine',
-        component: () => import(/* webpackChunkName: "mine" */ '@/views/mine/mine.vue'),
+        path: 'center',
+        name: 'center',
+        component: () => import(/* webpackChunkName: "center" */ '@/views/mine/center/center.vue'),
         meta: { title: '个人中心' }
       },
       {
-        path: '/map',
+        path: 'map',
         name: 'map',
-        component: () => import('@/views/home/map/map.vue'),
+        component: () => import(/* webpackChunkName: "map" */ '@/views/home/map/map.vue'),
         meta: { title: '地图' }
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: () => import(/* webpackChunkName: "home-order" */'@/views/home/order/order.vue'),
+        meta: { title: '订单' }
       }
     ]
   },
   {
     path: '/goods/details',
     name: 'details',
-    component: () => import('@/views/home/goods/details.vue'),
+    component: () => import(/* webpackChunkName: "details" */'@/views/home/goods/details.vue'),
     redirect: '/goods/details/item',
     children: [
       {
         path: 'item',
         name: 'details-item',
-        component: () => import('@/components/home/goods/details_item.vue')
+        component: () => import(/* webpackChunkName: "details" */'@/components/home/goods/details_item.vue')
       },
       {
         path: 'content',
         name: 'details-content',
-        component: () => import('@/components/home/goods/details_content.vue')
+        component: () => import(/* webpackChunkName: "details" */'@/components/home/goods/details_content.vue')
       },
       {
         path: 'review',
         name: 'details-review',
-        component: () => import('@/components/home/goods/details_review.vue')
+        component: () => import(/* webpackChunkName: "details" */'@/components/home/goods/details_review.vue')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/mine/login/login.vue'),
+    meta: {
+      keepAlive: false,
+      title: '会员登录'
+    }
+  },
+  {
+    path: '/reg',
+    name: 'reg',
+    component: () => import('@/views/mine/reg/reg.vue'),
+    meta: {
+      keepAlive: false,
+      title: '会员注册'
+    }
+  },
+  {
+    path: '/mine',
+    name: 'mine',
+    redirect: '/home/center',
+    component: () => import('@/views/mine/mine.vue'),
+    children: [
+      {
+        path: 'order',
+        name: 'mine-order',
+        component: () => import('@/views/mine/order/order.vue'),
+        redirect: '/user/order/list',
+        meta: { auth: true },
+        children: [
+          {
+            path: 'list',
+            name: 'order-list',
+            component: () => import('@/views/mine/order/list.vue'),
+            meta: { auth: true }
+          },
+          {
+            path: 'review',
+            name: 'order-review',
+            component: () => import('@/views/mine/order/review.vue'),
+            meta: { auth: true }
+          }
+        ]
+      },
+      {
+        path: 'order/details',
+        name: 'order-details',
+        component: () => import('@/views/mine/order/details.vue'),
+        meta: {
+          auth: true,
+          title: '订单详情'
+        }
+      },
+      {
+        path: 'order/add_review',
+        name: 'order-add-review',
+        component: () => import('@/views/mine/order/add-review.vue'),
+        meta: {
+          auth: true,
+          title: '评价'
+        }
+      },
+      {
+        path: 'profile',
+        name: 'profile',
+        component: () => import('@/views/mine/profile/profile.vue'),
+        meta: {
+          auth: true,
+          title: '个人资料'
+        }
+      },
+      {
+        path: 'address',
+        name: 'address',
+        component: () => import('@/views/mine/address/address.vue'),
+        meta: {
+          auth: true,
+          title: '收货地址管理'
+        }
+      },
+      {
+        path: 'address/add',
+        name: 'address-add',
+        component: () => import('@/views/mine/address/add-address.vue'),
+        meta: {
+          auth: true,
+          title: '添加收货地址'
+        }
+      },
+      {
+        path: '/address/mod',
+        name: 'address-mod',
+        component: () => import('@/views/mine/address/mod-address.vue'),
+        meta: {
+          auth: true,
+          title: '修改收货地址'
+        }
+      },
+      {
+        path: 'bind_cellphone',
+        name: 'bind-cellphone',
+        component: () => import('@/views/mine/bind-cellphone/bind-cellphone.vue'),
+        meta: {
+          auth: true,
+          title: '绑定手机号'
+        }
+      },
+      {
+        path: 'mod_password',
+        name: 'mod-password',
+        component: () => import('@/views/mine/mod-password/mod-password.vue'),
+        meta: {
+          auth: true,
+          title: '修改密码'
+        }
+      },
+      {
+        path: 'fav',
+        name: 'fav',
+        component: () => import('@/views/mine/fav/fav.vue'),
+        meta: {
+          auth: true,
+          title: '我的收藏'
+        }
       }
     ]
   }

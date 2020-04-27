@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import { mapMutations, mapState, mapGetters } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
   import baseMixins from '../../../assets/js/mixins/baseMixins'
 
   export default {
@@ -67,12 +67,10 @@
       document.title = this.$route.meta.title
     },
     computed: {
-      ...mapState({
-        cartData: state => state.cart.cartData
-      }),
       ...mapGetters({
         total: 'cart/total',
-        freight: 'cart/freight'
+        freight: 'cart/freight',
+        cartData: 'cart/cartData'
       })
     },
     methods: {
@@ -130,7 +128,7 @@
       // 去结算
       statement () {
         if (this.total > 0) {
-          this.$router.push('/order')
+          this.$router.push('/home/order')
         }
       }
     }
@@ -174,8 +172,10 @@
       bottom 40px
       width 100%
       overflow hidden
+
       .list-content
         min-height 520px
+
         .cart-list
           width: 90%
           margin 10px auto 0

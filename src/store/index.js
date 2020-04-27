@@ -6,8 +6,8 @@ import goods from './modules/goods'
 import search from './modules/search'
 import goodsReview from './modules/goods/review'
 import cart from './modules/cart'
-// import address from './modules/address'
-// import order from './modules/order'
+import address from './modules/address'
+import order from './modules/order'
 import createLogger from 'vuex/dist/logger'
 
 Vue.use(Vuex)
@@ -20,9 +20,9 @@ const store = new Vuex.Store({
     goods,
     search,
     goodsReview,
-    cart
-    // address,
-    // order
+    cart,
+    address,
+    order
   },
   // strict: debug,
   plugins: debug ? [createLogger()] : []

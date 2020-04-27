@@ -1,21 +1,29 @@
-import { getAddresData, delAddressData, addAddressData, getAddressInfoData, modAddressData, getDefaultAddressData } from '../../../api/address'
+import {
+  getAddresData,
+  delAddressData,
+  addAddressData,
+  getAddressInfoData,
+  modAddressData,
+  getDefaultAddressData
+} from '../../../api/address.js'
+
 export default {
   namespaced: true,
   state: {
     address: []
   },
   mutations: {
-    'SET_ADDRESS'(state, payload) {
+    'SET_ADDRESS' (state, payload) {
       state.address = payload.address
     },
     // 删除收货地址
-    'DEL_ADDRESS'(state, payload) {
+    'DEL_ADDRESS' (state, payload) {
       state.address.splice(payload.index, 1)
     }
   },
   actions: {
     // 获取收货地址
-    getAddress(conText, payload) {
+    getAddress (conText, payload) {
       getAddresData(conText.rootState.user.uid).then((res) => {
         if (res.code === 200) {
           conText.commit('SET_ADDRESS', { address: res.data })
@@ -23,7 +31,7 @@ export default {
       })
     },
     // 删除收货地址
-    delAddress(conText, payload) {
+    delAddress (conText, payload) {
       delAddressData({ uid: conText.rootState.user.uid, ...payload }).then((res) => {
         if (res.code === 200) {
           if (payload.index) {
@@ -36,7 +44,7 @@ export default {
       })
     },
     // 添加收货地址
-    addAddress(conText, payload) {
+    addAddress (conText, payload) {
       addAddressData({ uid: conText.rootState.user.uid, ...payload }).then((res) => {
         if (payload.success) {
           payload.success(res)
@@ -44,7 +52,7 @@ export default {
       })
     },
     // 收货地址详情
-    getAddressInfo(conText, payload) {
+    getAddressInfo (conText, payload) {
       getAddressInfoData({ uid: conText.rootState.user.uid, ...payload }).then((res) => {
         if (res.code === 200) {
           if (payload.success) {
@@ -54,7 +62,7 @@ export default {
       })
     },
     // 修改收货地址
-    modAddress(conText, payload) {
+    modAddress (conText, payload) {
       modAddressData({ uid: conText.rootState.user.uid, ...payload }).then((res) => {
         if (payload.success) {
           payload.success(res)
@@ -62,7 +70,7 @@ export default {
       })
     },
     // 获取默认收货地址
-    getDefaultAddress(conText, payload) {
+    getDefaultAddress (conText, payload) {
       getDefaultAddressData(conText.rootState.user.uid).then((res) => {
         if (res.code === 200) {
           if (payload.success) {

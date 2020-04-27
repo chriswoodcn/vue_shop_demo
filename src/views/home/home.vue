@@ -41,7 +41,7 @@ export default {
         {
           label: '我的',
           icon: 'iconfont icon-wode',
-          path: '/home/mine'
+          path: '/home/center'
         }
       ]
     }

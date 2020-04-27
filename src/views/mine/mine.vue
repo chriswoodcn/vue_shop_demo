@@ -1,16 +1,18 @@
 <template>
-  <div>我的</div>
+  <div class="mine">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-  import baseMixins from '../../assets/js/mixins/baseMixins'
-
   export default {
-    name: 'mine',
-    mixins: [baseMixins]
+    name: 'mine'
   }
 </script>
 
 <style lang="stylus" scoped>
   @import '~@assets/css/variable.styl'
+  .mine
+    width 100%
+    height auto
 </style>
