@@ -48,6 +48,7 @@ export default {
       addAddressData({ uid: conText.rootState.user.uid, ...payload }).then((res) => {
         if (payload.success) {
           payload.success(res)
+          console.log(res)
         }
       })
     },

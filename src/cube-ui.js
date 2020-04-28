@@ -49,7 +49,7 @@ import {
   ScrollNavBar
 } from 'cube-ui'
 
-// Vue.use(Button)
+Vue.use(Button)
 // Vue.use(Loading)
 // Vue.use(Tip)
 // Vue.use(Toolbar)
@@ -71,7 +71,7 @@ import {
 // Vue.use(Popup)
 Vue.use(Toast)
 // Vue.use(Picker)
-// Vue.use(CascadePicker)
+Vue.use(CascadePicker)
 // Vue.use(DatePicker)
 // Vue.use(TimePicker)
 // Vue.use(SegmentPicker)

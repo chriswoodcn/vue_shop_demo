@@ -1,6 +1,7 @@
 <template>
   <div class='page'>
     <!--    <SubHeader title="订单详情"></SubHeader>-->
+    <nav-header class="header" title="订单详情"></nav-header>
     <div class='main'>
       <div class='ordernum'>订单编号：{{orderInfo.ordernum}}</div>
       <div class='address-wrap'>
@@ -107,7 +108,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
   .page {
     width: 100%;
     min-height: 100vh;
@@ -115,46 +116,9 @@
     overflow: hidden;
   }
 
-  .sub-header {
-    width: 100%;
-    height: 1rem;
-    background-color: #FFFFFF;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-    border-bottom: 1px solid #EFEFEF;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-  }
-
-  .sub-header .back {
-    width: 0.8rem;
-    height: 0.8rem;
-    background-image: url("../../../assets/images/home/goods/back.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  .sub-header .title {
-    width: 79%;
-    height: auto;
-    font-size: 0.32rem;
-    text-align: center;
-  }
-
-  .sub-header .right-btn {
-    width: auto;
-    height: auto;
-    font-size: 0.32rem;
-  }
-
   .main {
     width: 100%;
-    padding-top: 1.02rem;
+    padding-top: 20px
   }
 
   .ordernum {

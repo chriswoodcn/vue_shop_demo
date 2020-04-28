@@ -1,4 +1,4 @@
-import { request } from './helper'
+import { request } from './request'
 import { URL, TOKEN } from '../assets/js/conf/config'
 
 // 收货地址列表
@@ -13,6 +13,7 @@ export function delAddressData (params) {
 
 // 添加收货地址
 export function addAddressData (params) {
+  console.log(params)
   return request({
     url: URL + '/user/address/add?token=' + TOKEN,
     method: 'post',

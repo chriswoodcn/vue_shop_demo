@@ -1,6 +1,6 @@
 <template>
-  <div class="page">
-    <!--    <SubHeader title="评价"></SubHeader>-->
+  <div class="add-review">
+    <nav-header class="header" title="评价"></nav-header>
     <div class='main'>
       <ul class='service' v-for="(item,index) in reviewServices" :key="index">
         <li>{{item.title}}</li>
@@ -12,7 +12,7 @@
       <div class='content-wrap'>
         <textarea placeholder="来分享你的消费感受吧!" v-model="content"></textarea>
       </div>
-      <button class='submit' type="button" @click="submit()">提交</button>
+      <div class="submit" @click="submit()">提交</div>
     </div>
   </div>
 </template>
@@ -84,7 +84,13 @@
             rsdata: JSON.stringify(rsdata),
             success: (res) => {
               if (res.code === 200) {
-                this.$router.go(-1)
+                this.$createToast({
+                  txt: '添加成功!',
+                  time: 2000,
+                  onTimeout: () => {
+                    this.$router.go(-1)
+                  }
+                }).show()
               } else {
                 // Toast(res.data)
                 this._toast(res.data)
@@ -97,86 +103,74 @@
   }
 </script>
 
-<style scoped>
-  .page {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #FFFFFF;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .add-review
+    width: 100%
+    min-height: 100vh
+    background-color: $color-background
+    font-size $font-size-medium
 
-  .main {
-    width: 100%;
-    padding-top: 1.02rem;
-  }
+    .main
+      width: 100%
+      margin-top 20px
 
-  .service {
-    width: 100%;
-    height: 1rem;
-    border-bottom: 1px solid #EFEFEF;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-  }
+      .service
+        width: 90%
+        margin 0 auto
+        height 40px
+        border-bottom: 1px solid $color-text-ll
+        display: flex
+        align-items: center
 
-  .service li:nth-child(1) {
-    font-size: 0.32rem;
-    margin-left: 3%;
-    margin-right: 15%;
-  }
+        li:nth-child(1)
+          margin-left: 3%
+          margin-right: 15%
 
-  .service li:nth-child(2) {
-    display: flex;
-    display: -webkit-flex;
-  }
+        li:nth-child(2)
+          display: flex
 
-  .service .stars {
-    width: 0.4rem;
-    height: 0.4rem;
-    background-image: url("../../../assets/images/user/orders/stars1.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 0.3rem;
-  }
+        .stars
+          width: 0.4rem
+          height: 0.4rem
+          background-image: url("../../../assets/images/user/orders/stars1.png")
+          background-size: 100%
+          background-repeat: no-repeat
+          background-position: center
+          margin-right: 0.3rem
 
-  .service .stars.active {
-    background-image: url("../../../assets/images/user/orders/stars2.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+        .stars.active
+          background-image: url("../../../assets/images/user/orders/stars2.png")
+          background-size: 100%
+          background-repeat: no-repeat
+          background-position: center
 
-  .content-wrap {
-    width: 100%;
-    height: 4rem;
-    text-align: center;
-    overflow: hidden;
-  }
+      .content-wrap
+        width: 90%
+        margin 0 auto
+        height: 200px
+        text-align: center
+        overflow hidden
 
-  .content-wrap textarea {
-    width: 95%;
-    height: 90%;
-    font-size: 0.32rem;
-    margin-top: 0.3rem;
-    outline: none;
-    border: 0 none;
-    resize: none;
-  }
+        textarea
+          width: 100%
+          height 90%
+          padding 10px
+          font-size: $font-size-small
+          margin-top: 20px
+          outline: none
+          border: 1px solid $color-text-ll
+          border-radius 5px
+          resize: none
+          box-sizing border-box
 
-  .submit {
-    width: 90%;
-    height: 0.8rem;
-    background-color: #E51B19;
-    font-size: 0.28rem;
-    color: #FFFFFF;
-    text-align: center;
-    line-height: 0.8rem;
-    border: 0 none;
-    border-radius: 4px;
-    outline: none;
-    margin: 0 auto;
-    display: block;
-    margin-top: 0.3rem;
-  }
+      .submit
+        width: 80%
+        height: 30px
+        background-color: $color-theme
+        color: $color-background
+        text-align: center
+        line-height: 30px
+        border-radius: 5px
+        margin: 20px auto 0
 </style>

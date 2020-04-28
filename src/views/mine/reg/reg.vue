@@ -1,10 +1,10 @@
 <template>
   <div class="reg">
-    <div class="header">
-      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>
-      <div class="title">会员注册</div>
-    </div>
+    <nav-header class="header" title="会员注册"></nav-header>
     <div class='main'>
+      <div class="inputs"><input type="text" placeholder="验证码" v-model="vcode"/>
+        <div class="vcode-img"><img :src="showCode" @click="changVCode($event)"/></div>
+      </div>
       <div class='cellphone-wrap'>
         <div class='cellphone'><input type="tel" @input="checkCellphone" placeholder="请输入手机号" v-model="cellphone"/>
         </div>
@@ -14,9 +14,6 @@
       <div class='password-wrap'>
         <div class='password'><input :type="isOpen?'text':'password'" placeholder="请输入密码" v-model="password"/></div>
         <div class='switch iconfont icon-yanjing-bi' :class="{'icon-yanjing':isOpen}" @click="isOpen=!isOpen"/>
-      </div>
-      <div class="inputs"><input type="text" placeholder="验证码" v-model="vcode"/>
-        <div class="vcode-img"><img :src="showCode" @click="changVCode($event)"/></div>
       </div>
       <div class='sure-btn' @click="submit()">注册</div>
     </div>
@@ -70,6 +67,7 @@
           return
         }
         const vcodeData = await this.checkVCode({ vcode: this.vcode })
+        // console.log(vcodeData)
         if (vcodeData.code !== 200) {
           this._toast('验证码不正确')
           return
@@ -119,6 +117,7 @@
             return
           }
           const vcodeData = await this.checkVCode({ vcode: this.vcode })
+          // console.log(vcodeData)
           if (vcodeData.code !== 200) {
             this._toast('您输入的图文验证码不正确')
             return
@@ -132,17 +131,18 @@
             return
           }
           const regData = await this.isReg({ username: this.cellphone })
+          // console.log(regData)
           if (regData.data.isreg === '1') {
             this._toast('此手机号已注册过，请更换手机号')
             return
           }
           this.isSendMsgCode = false
-          let time = 10
-          this.msgCodeText = '重新获取(' + time + ')'
+          let time = 30
+          this.msgCodeText = '重新获取(' + time + 's)'
           this.timer = setInterval(() => {
             if (time > 0) {
               time--
-              this.msgCodeText = '重新获取(' + time + ')'
+              this.msgCodeText = '重新获取(' + time + 's)'
             } else {
               clearInterval(this.timer)
               this.msgCodeText = '获取短信验证码'
@@ -181,29 +181,6 @@
     height 100vh
     background-color $color-background
     color $color-text
-
-    .header
-      position relative
-      height 50px
-      font-size $font-size-large-x
-      border-bottom 1px solid $color-text-ll
-      background-color $color-theme
-      color $color-background
-
-      .back
-        width 50px
-        height 50px
-        text-align center
-        line-height 50px
-
-      .title
-        height 50px
-        line-height 50px
-        font-size $font-size-large
-        position absolute
-        left 50%
-        top 50%
-        transform translate(-50%, -50%)
 
     .main
       width: 80%
@@ -260,7 +237,7 @@
         width: 100%
         height: 30px
         line-height 30px
-        margin: 0 auto
+        margin: 0 auto 50px
         border-radius: 5px
         border: 1px solid $color-background-d
         margin-top: 20px
@@ -285,7 +262,7 @@
         line-height 30px
         border: 1px solid $color-background-d
         border-radius: 5px
-        margin: 20px auto 40px
+        margin: 20px auto
         position: relative
 
         input

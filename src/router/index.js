@@ -75,7 +75,13 @@ const routes = [
         path: 'order',
         name: 'order',
         component: () => import(/* webpackChunkName: "home-order" */'@/views/home/order/order.vue'),
-        meta: { title: '订单' }
+        meta: { title: '确认订单' }
+      },
+      {
+        path: 'order/end',
+        name: 'order-end',
+        component: () => import(/* webpackChunkName: "home-order" */'@/views/home/order/order-end.vue'),
+        meta: { title: '完成订单' }
       }
     ]
   },
@@ -130,7 +136,7 @@ const routes = [
         path: 'order',
         name: 'mine-order',
         component: () => import('@/views/mine/order/order.vue'),
-        redirect: '/user/order/list',
+        redirect: '/mine/order/list',
         meta: { auth: true },
         children: [
           {
@@ -193,7 +199,7 @@ const routes = [
         }
       },
       {
-        path: '/address/mod',
+        path: 'address/mod',
         name: 'address-mod',
         component: () => import('@/views/mine/address/mod-address.vue'),
         meta: {
@@ -244,6 +250,19 @@ const router = new VueRouter({
     )
   },
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth) {
+    // eslint-disable-next-line
+    if (Boolean(localStorage.isLogin)) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

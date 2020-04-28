@@ -1,4 +1,4 @@
-import { request } from './helper'
+import { request } from './request'
 import { URL, TOKEN } from '../assets/js/conf/config'
 // 左侧分类
 export function getClassifyData() {

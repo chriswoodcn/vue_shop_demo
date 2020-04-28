@@ -1,6 +1,6 @@
 <template>
-  <div class="page">
-    <!--    <SubHeader title="个人资料" right-text="保存" @submit="submit()"></SubHeader>-->
+  <div class="profile">
+    <nav-header class="header" title="个人资料"></nav-header>
     <div class='main'>
       <ul class='head'>
         <li>头像</li>
@@ -13,17 +13,11 @@
       </ul>
       <ul class='list'>
         <li>性别</li>
-        <li><input type="text" placeholder="请选择性别" :value="showGender" readonly @click="isGender=true"/></li>
+        <li><input type="text" placeholder="请选择性别" :value="showGender" readonly @click="handleChooseGender"/></li>
         <li class='arrow'></li>
       </ul>
+      <div class='submit-save' @click="submit()">保存</div>
     </div>
-    <!--    <van-action-sheet-->
-    <!--      v-model="isGender"-->
-    <!--      :actions="genders"-->
-    <!--      cancel-text="取消"-->
-    <!--      title="请选择性别"-->
-    <!--      @select="selectGender"-->
-    <!--    />-->
   </div>
 </template>
 
@@ -31,9 +25,9 @@
   import { mapActions } from 'vuex'
 
   export default {
+    name: 'profile',
     data () {
       return {
-        isGender: false,
         genders: [
           { name: '男' },
           { name: '女' }
@@ -66,13 +60,21 @@
         updateUserInfo: 'user/updateUserInfo',
         getUserInfo: 'user/getUserInfo'
       }),
+      _toast (msg) {
+        this.$createToast({
+          txt: msg,
+          type: 'txt'
+        }).show()
+      },
       submit () {
         if (this.nickname.match(/^\s*$/)) {
           // Toast('请输入昵称')
+          this._toast('请输入昵称')
           return
         }
         if (this.gender.match(/^\s*$/)) {
           // Toast('请选择性别')
+          this._toast('请选择性别')
           return
         }
         if (this.isSubmit) {
@@ -83,25 +85,38 @@
             head: this.head,
             success: (res) => {
               if (res.code === 200) {
-                // Toast({
-                //   message: '修改成功！',
-                //   duration: 2000,
-                //   onClose: () => {
-                //     this.$router.go(-1)
-                //   }
-                // })
+                this.$createToast({
+                  txt: '修改成功!',
+                  time: 2000,
+                  onTimeout: () => {
+                    this.$router.go(-1)
+                  }
+                }).show()
               } else {
-                // Toast(res.data)
+                this._toast(res.data)
               }
             }
           })
         }
       },
+      handleChooseGender () {
+        const column = [{
+          text: '男',
+          value: '1'
+        }, {
+          text: '女',
+          value: '2'
+        }]
+        this.$createPicker({
+          title: '请选择性别',
+          data: [column],
+          onSelect: this.selectGender
+        }).show()
+      },
       // 选择性别
-      selectGender (val) {
-        this.showGender = val.name
-        this.isGender = false
-        this.gender = this.showGender === '男' ? '1' : this.showGender === '女' ? '2' : ''
+      selectGender (val, index, txt) {
+        this.showGender = txt
+        this.gender = val
       },
       // 上传头像
       uploadHead (e) {
@@ -121,97 +136,87 @@
   }
 </script>
 
-<style scoped>
-  .page {
-    width: 100%;
-    height: 100vh;
-    background-color: #FFFFFF;
-    overflow: hidden;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .profile
+    width: 100%
+    height: 100vh
+    background-color: $color-background
+    font-size $font-size-medium
 
-  .main {
-    width: 100%;
-    margin-top: 1.02rem;
-  }
+    .main
+      width: 90%
+      margin 10px 10px 0
 
-  .main ul.head {
-    width: 100%;
-    height: 1.2rem;
-    border-bottom: 1px solid #EFEFEF;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
-  }
+      ul.head
+        width: 100%
+        height: 50px
+        border-bottom: 1px solid $color-text-ll
+        display: flex
+        align-items: center
+        justify-content: space-between
 
-  .main ul.head li:nth-child(1) {
-    font-size: 0.28rem;
-    margin-left: 5%;
-  }
+        li:nth-child(1)
+          margin-left: 5%
 
-  .main ul.head li:nth-child(2) {
-    width: 1rem;
-    height: 1rem;
-    margin-right: 10%;
-    position: relative;
-    z-index: 1;
-  }
+        li:nth-child(2)
+          width: 45px
+          height: 45px
+          margin-right: 5%
+          position: relative
 
-  .main ul.head li:nth-child(2) img {
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-  }
+          img
+            width: 100%
+            height: 100%
+            border-radius: 50%
 
-  .main ul.head li:nth-child(2) input {
-    width: 100%;
-    height: 95%;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    opacity: 0;
-  }
+          input
+            width: 100%
+            height: 95%
+            position: absolute
+            z-index: 1
+            left: 0
+            top: 0
+            opacity: 0
 
-  .main ul.list {
-    width: 100%;
-    height: 0.8rem;
-    border-bottom: 1px solid #EFEFEF;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
-    font-size: 0.28rem;
-  }
+      ul.list
+        width: 100%
+        height: 40px
+        border-bottom: 1px solid $color-text-ll
+        display: flex;
+        align-items: center
+        justify-content: space-between
 
-  .main ul.list li:nth-child(1) {
-    margin-left: 5%;
-  }
+        li:nth-child(1)
+          margin-left: 5%
 
-  .main ul.list li:nth-child(2) {
-    width: 50%;
-    height: 100%;
-    margin-left: 20%;
-  }
+        li:nth-child(2)
+          width: 50%
+          height: 100%
+          margin-left: 20%
 
-  .main ul.list li:nth-child(2) input {
-    width: 100%;
-    height: 95%;
-    text-align: right;
-    font-size: 0.28rem;
-  }
+          input
+            width: 100%
+            height: 95%
+            text-align: right
 
-  .main ul.list li.arrow {
-    width: 0.4rem;
-    height: 0.4rem;
-    background-image: url("../../../assets/images/common/right_arrow.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 3%;
-  }
+        li.arrow
+          width: 0.4rem
+          height: 0.4rem
+          background-image: url("../../../assets/images/common/right_arrow.png")
+          background-size: 100%
+          background-repeat: no-repeat
+          background-position: center
+          margin-right: 3%
+
+      .submit-save
+        width: 80%
+        height: 30px
+        line-height 30px
+        text-align center
+        background-color: $color-theme
+        border-radius: 5px
+        margin: 0 auto
+        color: $color-background
+        margin-top: 0.4rem
 </style>

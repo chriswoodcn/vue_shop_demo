@@ -7,7 +7,7 @@
         <div class='status'>{{item.status === '0' ? '待付款':item.status ==='1' ? '待收货':'已收货'}}</div>
       </div>
       <div class='item-list' v-for="(item2,index2) in item.goods" :key="index2">
-        <div class='image'><img :data-echo="item2.image" src="../../../assets/images/common/lazyImg.jpg" alt=""/></div>
+        <div class='image'><img v-lazy="item2.image" alt=""/></div>
         <div class='title'>{{item2.title}}</div>
         <div class='amount'>x {{item2.amount}}</div>
         <div class='status-btn'
@@ -61,104 +61,72 @@
   }
 </script>
 
-<style scoped>
-  .order-list {
-    width: 100%;
-    height: auto;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .order-list
+    width: 90%
+    height: auto
+    margin 0 auto
+    margin-bottom 20px
 
-  .order-list .ordernum-wrap {
-    width: 96%;
-    height: 0.8rem;
-    border-bottom: #EFEFEF 1px solid;
-    display: flex;
-    display: -webkit-flex;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
-    padding-left: 2%;
-    padding-right: 2%;
-    align-items: center;
-    -webkit-align-items: center;
-  }
+    .ordernum-wrap
+      height: 30px
+      border-bottom: 1px solid $color-text-ll
+      display: flex
+      justify-content: space-between
+      padding-left: 2%
+      padding-right: 2%
+      align-items: center
+      font-size $font-size-small
 
-  .order-list .ordernum-wrap .ordernum, .order-list .ordernum-wrap .status {
-    width: auto;
-    height: auto;
-    font-size: 0.28rem;
-  }
+      .status
+        width: auto
+        height: auto
 
-  .item-list {
-    width: 100%;
-    height: 2.4rem;
-    border-bottom: #EFEFEF 1px solid;
-    position: relative;
-    z-index: 1;
-  }
+    .item-list
+      width: 100%
+      min-height: 100px
+      border-bottom: 1px solid $color-text-ll
+      position: relative;
+      z-index: 1
+      font-size $font-size-small
 
-  .item-list .image {
-    width: 1.2rem;
-    height: 1.2rem;
-    position: absolute;
-    z-index: 1;
-    left: 2%;
-    top: 0.2rem;
-  }
+      .image
+        width: 50px
+        height: 50px
+        position: absolute
+        z-index: 1
+        left: 2%
+        top: 50%
+        transform translateY(-50%)
 
-  .item-list .image img {
-    width: 100%;
-    height: 100%;
-  }
+        img
+          width: 100%
+          height: 100%
 
-  .item-list .title {
-    width: 72%;
-    height: auto;
-    font-size: 0.28rem;
-    position: absolute;
-    z-index: 1;
-    left: 22%;
-    top: 0.2rem;
-  }
+      .title
+        width: 72%
+        height: auto
+        line-height 1.5
+        position: absolute
+        z-index: 1
+        left: 22%
+        top: 20%
 
-  .item-list .amount {
-    width: auto;
-    height: auto;
-    position: absolute;
-    z-index: 1;
-    right: 2%;
-    bottom: 0.8rem;
-    font-size: 0.24rem;
-    color: #909090;
-  }
+      .amount
+        position: absolute
+        z-index: 1
+        right: 2%
+        bottom: 30%
+        color: $color-text-l
 
-  .item-list .status-btn {
-    font-size: 0.24rem;
-    width: 1.24rem;
-    height: 0.52rem;
-    line-height: 0.52rem;
-    text-align: center;
-    border: 1px solid #f15353;
-    border-radius: 4px;
-    position: absolute;
-    z-index: 1;
-    right: 2%;
-    bottom: 0.2rem;
-  }
-
-  .total-wrap {
-    width: 96%;
-    height: 0.8rem;
-    border-bottom: 1px solid #F17F1F;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
-    padding-left: 2%;
-    padding-right: 2%;
-  }
-
-  .total-wrap .total {
-    font-size: 0.28rem;
-  }
+      .status-btn
+        position: absolute
+        z-index: 1
+        right: 2%
+        bottom: 2%
+        color: $color-text-l
+        padding 3px 6px
+        border 1px solid $color-theme
+        border-radius 5px
 </style>

@@ -1,11 +1,10 @@
 <template>
-  <div class="page">
+  <div class="mod-password">
+    <nav-header class="header" title="修改密码"></nav-header>
     <div class='main'>
       <div class='input-wrap'>
         <input :type="isOpen?'text':'password'" placeholder="请输入不小于6位的密码" class='password' v-model="password"/>
-        <div class='switch-wrap'>
-          <!--          <van-switch v-model="isOpen" active-color="#EB1625"/>-->
-        </div>
+        <div class='switch iconfont icon-yanjing-bi' :class="{'icon-yanjing':isOpen}" @click="isOpen=!isOpen"/>
       </div>
       <div class='save-btn' @click="submit">提交</div>
     </div>
@@ -54,7 +53,13 @@
           password: this.password,
           success: (res) => {
             if (res.code === 200) {
-              this.$router.go(-1)
+              this.$createToast({
+                txt: '修改成功!',
+                time: 2000,
+                onTimeout: () => {
+                  this.$router.go(-1)
+                }
+              }).show()
             } else {
               // Toast(res.data)
               this._toast(res.data)
@@ -66,79 +71,49 @@
   }
 </script>
 
-<style scoped>
-  .page {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #FFFFFF;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .mod-password
+    width: 100%
+    min-height: 100vh
+    background-color: $color-background
+    font-size $font-size-medium
 
-  .main {
-    width: 100%;
-    padding-top: 1.02rem;
-  }
+  .main
+    width: 100%
+    margin-top: 20px
 
-  .main .tip {
-    width: 100%;
-    height: 1rem;
-    background-color: #F3F5C4;
-    color: #ac7700;
-    font-size: 0.28rem;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-  }
+    .input-wrap
+      width: 90%
+      height: 30px
+      border: 1px solid $color-text-l
+      border-radius: 5px
+      margin: 0 auto
+      display: flex
+      position relative
 
-  .main .tip .icon {
-    width: 0.4rem;
-    height: 0.4rem;
-    background-image: url("../../../assets/images/user/mobile/tip.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-left: 0.4rem;
-    margin-right: 0.2rem;
-  }
+      .password
+        width: 75%
+        height: 100%
+        margin-left: 0.2rem
 
-  .main .tip .text {
-    width: auto;
-    height: auto;
-  }
+      .switch
+        width 30px
+        height 30px
+        line-height 30px
+        position absolute
+        top 50%
+        right 0
+        transform translateY(-50%)
 
-  .main .input-wrap {
-    width: 93%;
-    height: 0.8rem;
-    border: #c5cbcf solid 1px;
-    border-radius: 4px;
-    margin: 0 auto;
-    overflow: hidden;
-    display: flex;
-    display: -webkit-flex;
-  }
-
-  .main .input-wrap .password {
-    width: 75%;
-    height: 100%;
-    margin-left: 0.2rem;
-    font-size: 0.28rem;
-  }
-
-  .main .input-wrap .switch-wrap {
-    width: 20%;
-    margin-top: 0.1rem;
-  }
-
-  .main .save-btn {
-    width: 93%;
-    height: 0.8rem;
-    background-color: #E42321;
-    font-size: 0.28rem;
-    color: #FFFFFF;
-    text-align: center;
-    line-height: 0.8rem;
-    margin: 0 auto;
-    border-radius: 4px;
-    margin-top: 0.2rem;
-  }
+    .save-btn
+      width: 90%;
+      height: 30px
+      background-color: $color-theme
+      color: $color-background
+      text-align: center;
+      line-height: 30px
+      margin: 0 auto;
+      border-radius: 5px
+      margin-top: 20px
 </style>

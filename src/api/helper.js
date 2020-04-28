@@ -1,7 +1,14 @@
 import axios from 'axios'
 import qs from 'qs'
+
 const load = document.querySelector('.load')
-export function request(config = {}) {
+
+export function request (config = {}) {
+  // const service = axios.create({
+  //   baseURL: 'https://some-domain.com/api/',
+  //   timeout: 1000,
+  //   headers: { 'X-Custom-Header': 'foobar' }
+  // })
   // 请求拦截器
   axios.interceptors.request.use(
     function (config) {

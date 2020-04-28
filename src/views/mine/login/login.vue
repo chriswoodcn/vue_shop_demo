@@ -1,9 +1,10 @@
 <template>
   <div class="login">
-    <div class="header">
-      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>
-      <div class="title">会员登录</div>
-    </div>
+    <!--    <div class="header">-->
+    <!--      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>-->
+    <!--      <div class="title">会员登录</div>-->
+    <!--    </div>-->
+    <nav-header class="header" title="会员登录"></nav-header>
     <div class='main login-main'>
       <div class='code-wrap'>
         <div class="label">手机号码</div>
@@ -77,6 +78,7 @@
           password: this.password,
           success: (res) => {
             if (res.code === 200) {
+              console.log(this.$route.query.from)
               if (this.$route.query.from === 'reg') {
                 this.$router.go(-3)
               } else {
@@ -104,29 +106,6 @@
     height 100vh
     background-color $color-background
     color $color-text
-
-    .header
-      position relative
-      height 50px
-      font-size $font-size-large-x
-      border-bottom 1px solid $color-text-ll
-      background-color $color-theme
-      color $color-background
-
-      .back
-        width 50px
-        height 50px
-        text-align center
-        line-height 50px
-
-      .title
-        height 50px
-        line-height 50px
-        font-size $font-size-large
-        position absolute
-        left 50%
-        top 50%
-        transform translate(-50%, -50%)
 
     .main
       width: 100%

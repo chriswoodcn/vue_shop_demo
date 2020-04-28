@@ -1,19 +1,23 @@
 <template>
-  <div class="page">
+  <div class="mine-order">
     <!--    <SubHeader :title="headerTitle"></SubHeader>-->
+    <nav-header class="header" :title="headerTitle"></nav-header>
     <OrderTags :status="status"></OrderTags>
     <div class='main'>
-      <router-view></router-view>
+      <cube-scroll>
+        <div class="scroll-content">
+          <router-view></router-view>
+        </div>
+      </cube-scroll>
     </div>
   </div>
 </template>
 
 <script>
-  // import SubHeader from '../../../components/sub_header'
   import OrderTags from '@/components/mine/order/order-tags'
 
   export default {
-    name: 'my-order',
+    name: 'mine-order',
     data () {
       return {
         status: this.$route.query.status ? this.$route.query.status : 'all',
@@ -63,15 +67,18 @@
   }
 </script>
 
-<style scoped>
-  .page {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #FFFFFF;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .mine-order
+    width: 100%
+    min-height: 100vh
+    background-color: $color-background
 
-  .main {
-    width: 100%;
-    padding-top: 1.9rem;
-  }
+    .main
+      width: 100%
+      height 577px
+      overflow hidden
+      .scroll-content
+        min-height 580px
+        padding-bottom 50px
 </style>

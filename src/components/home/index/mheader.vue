@@ -11,7 +11,12 @@
       </div>
     </div>
     <div class="right" @click.prevent="rightClick">
-      <p>{{ data.right }}</p>
+      <template v-if="!isLogin">
+        <p>{{ data.right }}</p>
+      </template>
+      <template v-else>
+        <p class="iconfont icon-ren"></p>
+      </template>
     </div>
   </div>
 </template>
@@ -41,7 +46,8 @@
     },
     computed: {
       ...mapGetters({
-        userAddress: 'user/userAddress'
+        userAddress: 'user/userAddress',
+        isLogin: 'user/isLogin'
       })
     },
     methods: {
@@ -52,7 +58,7 @@
         this.$emit('centerClick')
       },
       rightClick () {
-        this.$emit('rightClick')
+        this.$emit('rightClick', this.isLogin)
       }
     }
   }
@@ -112,4 +118,7 @@
       width 40px
       height 100%
       font-size $font-size-medium-x
+
+      .iconfont
+        font-size 26px
 </style>

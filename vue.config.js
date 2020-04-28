@@ -42,7 +42,8 @@ module.exports = {
           '^/baiduapi': ''
         }
       }
-    }
+    },
+    public: 'localhost:8080'
   },
   configureWebpack: {
     resolve: {

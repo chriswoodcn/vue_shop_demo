@@ -23,29 +23,23 @@
   }
 </script>
 
-<style scoped>
-  .tags-wrap {
-    width: 100%;
-    height: 0.8rem;
-    background-color: #FFFFFF;
-    position: fixed;
-    z-index: 2;
-    left: 0;
-    top: 1.02rem;
-    border-bottom: #DCDCDC solid 1px;
-    display: flex;
-    display: -webkit-flex;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .tags-wrap
+    width: 100%
+    height: 40px
+    line-height 40px
+    font-size $font-size-medium
+    background-color: $color-background
+    position: relative
+    border-bottom: 1px solid $color-text-ll
+    display: flex
+    box-sizing border-box
 
-  .tags-wrap .tags {
-    width: 25%;
-    height: 100%;
-    text-align: center;
-    font-size: 0.28rem;
-    line-height: 0.8rem;
-  }
-
-  .tags-wrap .tags.active {
-    border-bottom: #E42321 1px solid;
-  }
+    .tags
+      width: 25%
+      height: 100%
+      text-align: center
+      &.active
+        border-bottom: 1px solid $color-theme
 </style>

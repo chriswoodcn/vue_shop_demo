@@ -13,8 +13,10 @@ import VueLazyload from 'vue-lazyload'
 // import BaiduMap from 'vue-baidu-map'
 // 引入全局组件
 import Divider from '@/components/base/divider.vue'
+import NavHeader from '@/components/base/nav-header.vue'
 
 Vue.component('divider', Divider)
+Vue.component('nav-header', NavHeader)
 Vue.config.productionTip = false
 Vue.prototype.$utils = utils
 Vue.use(VueLazyload, {

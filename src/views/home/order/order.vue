@@ -1,11 +1,12 @@
 <template>
   <div class="order">
-    <div class="header">
-      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>
-      <div class="title">订单管理</div>
-    </div>
+<!--    <div class="header">-->
+<!--      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>-->
+<!--      <div class="title">订单管理</div>-->
+<!--    </div>-->
+    <nav-header title="确认订单"></nav-header>
     <div class='main'>
-      <div class='address-wrap' @click="$router.push('/address')">
+      <div class='address-wrap' @click="$router.push('/mine/address')">
         <div class='persion-info' v-show="name?true:false">
           <span>收货人：{{name}}</span><span>{{cellphone}}</span>
         </div>
@@ -139,7 +140,7 @@
               addsid: sessionStorage.addsid,
               success: (res) => {
                 if (res.code === 200) {
-                  this.$router.push('/order/end')
+                  this.$router.push('/home/order/end')
                 }
               }
             })
@@ -220,34 +221,33 @@
               border-right: 5px solid transparent
 
         .persion-info
-          width: auto
           height: auto
           position: absolute
           z-index: 1
-          left: 0.4rem
-          top: 0
-          font-size: 0.28rem
+          left: 20px
+          top: 20%
+          font-size: $font-size-small
           font-weight: bold
+          no-wrap()
 
           span:nth-child(1)
-            padding-right: 1rem
+            padding-right: 30px
 
         .address
           width: auto
           height: auto
           position: absolute
           z-index: 1
-          left: 0.4rem
-          top: 0.9rem
+          left: 20px
+          top: 60%
+          font-size: $font-size-small
+          no-wrap()
 
           img
-            width: 0.4rem
-            height: 0.4rem
+            width: 15px
+            height: 15px
             vertical-align: middle
-            margin-right: 0.1rem
-
-          span
-            font-size: 0.24rem
+            margin-right: 15px
 
         .arrow
           width: 15px
@@ -264,6 +264,9 @@
         padding 0 20px
         overflow: hidden
         box-sizing border-box
+        background-color $color-background
+        position relative
+        z-index 11
         .goods-content
           width 100%
           min-height 510px
@@ -328,8 +331,9 @@
       height: 50px
       line-height: 50px
       border-top: 1px solid $color-text-ll
+      background-color $color-background
       position: fixed
-      z-index: 5
+      z-index: 11
       left: 0
       bottom: 0
       display: flex

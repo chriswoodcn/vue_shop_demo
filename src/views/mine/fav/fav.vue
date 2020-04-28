@@ -1,18 +1,22 @@
 <template>
-  <div class="page">
-    <!--    <SubHeader title="我的收藏"></SubHeader>-->
+  <div class="fav">
+    <nav-header class="header" title="我的收藏"></nav-header>
     <div class='main'>
-      <div class='goods-list' v-for="(item,index) in favs" :key="index">
-        <div class='image'>
-          <img :data-echo="item.image" src="../../../assets/images/common/lazyImg.jpg" alt=""/>
+      <cube-scroll :data="favs">
+        <div class="scroll-content">
+          <div class='goods-list' v-for="(item,index) in favs" :key="index">
+            <div class='image'>
+              <img :data-echo="item.image" src="../../../assets/images/common/lazyImg.jpg" alt=""/>
+            </div>
+            <div class='title'>{{item.title}}</div>
+            <div class='price'>¥{{item.price}}</div>
+            <div class='btn-wrap'>
+              <div class='btn' @click="$router.push('/goods/details?gid='+item.gid)">购买</div>
+              <div class='btn' @click="delFav(index,item.fid)">删除</div>
+            </div>
+          </div>
         </div>
-        <div class='title'>{{item.title}}</div>
-        <div class='price'>¥{{item.price}}</div>
-        <div class='btn-wrap'>
-          <div class='btn' @click="$router.push('/goods/details?gid='+item.gid)">购买</div>
-          <div class='btn' @click="delFav(index,item.fid)">删除</div>
-        </div>
-      </div>
+      </cube-scroll>
     </div>
     <div class="no-data" v-show="false">您还没有收藏商品！</div>
   </div>
@@ -87,22 +91,6 @@
             })
           }
         }).show()
-        // Dialog.confirm({
-        //   title: '',
-        //   message: '确认要删除吗？'
-        // }).then(() => {
-        //   this.asyncDelFav({
-        //     index: index,
-        //     fid: fid,
-        //     success: () => {
-        //       this.$nextTick(() => {
-        //         this.$utils.lazyImg()
-        //       })
-        //     }
-        //   })
-        // }).catch(() => {
-        //
-        // })
       }
     },
     beforeDestroy () {
@@ -111,77 +99,71 @@
   }
 </script>
 
-<style scoped>
-  .page {
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .fav
     width: 100%;
     min-height: 100vh;
-    background-color: #FFFFFF;
-  }
+    background-color: $color-text-ll
 
-  .main {
-    width: 100%;
-    padding-top: 1.2rem;
-    display: flex;
-    display: -webkit-flex;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
-    box-sizing: border-box;
-    padding-left: 2%;
-    padding-right: 2%;
-    flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-  }
+    .main
+      width 100%
+      height 617px
+      overflow hidden
 
-  .main .goods-list {
-    width: 48%;
-    height: 5.8rem;
-    margin-bottom: 0.3rem;
-    overflow: hidden;
-  }
+      .scroll-content
+        width 96vw
+        margin 0 auto
+        min-height 630px
+        padding-top 10px
+        display: flex
+        justify-content space-between
+        flex-wrap wrap
+        box-sizing: border-box
 
-  .main .goods-list .image {
-    width: 3.36rem;
-    height: 3.35rem;
-    margin: 0 auto;
-  }
+        .goods-list
+          width: 45vw
+          height: 260px
+          margin 0 5px 20px
+          background-color $color-background
+          border-radius 5px
+          padding 10px
+          box-sizing border-box
+          font-size: $font-size-medium
 
-  .main .goods-list .image img {
-    width: 100%;
-    height: 100%;
-    border: 0 none;
-  }
+          .image
+            width: 120px
+            height: 120px
+            margin: 0 auto
 
-  .main .goods-list .title {
-    width: 100%;
-    height: 0.8rem;
-    overflow: hidden;
-    font-size: 0.28rem;
-    margin-top: 0.2rem;
-  }
+            img
+              width: 100%
+              height: 100%
 
-  .main .goods-list .price {
-    font-size: 0.28rem;
-    color: #F93036;
-    margin-top: 0.2rem;
-  }
+          .title
+            width: 100%
+            height: 28px
+            overflow: hidden
+            font-size: $font-size-medium
+            margin-top: 10px
 
-  .main .goods-list .btn-wrap {
-    width: 100%;
-    display: flex;
-    display: -webkit-flex;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
-    margin-top: 0.2rem;
-  }
+          .price
+            font-size: $font-size-medium
+            color: $color-text-price
+            margin-top: 15px
 
-  .main .goods-list .btn-wrap .btn {
-    width: 1.04rem;
-    height: 0.52rem;
-    border: 1px solid #F93036;
-    font-size: 0.28rem;
-    color: #F93036;
-    border-radius: 4px;
-    text-align: center;
-    line-height: 0.52rem;
-  }
+          .btn-wrap
+            width: 100%
+            display: flex
+            justify-content: space-between
+            margin-top: 15px
+
+            .btn
+              width: 60px
+              border: 1px solid $color-theme
+              color: $color-theme
+              border-radius: 5px
+              text-align: center
+              padding 2px 2px
+
 </style>

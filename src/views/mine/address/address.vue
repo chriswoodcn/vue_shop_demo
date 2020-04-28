@@ -1,6 +1,6 @@
 <template>
-  <div class="page">
-    <!--    <SubHeader title="收货管理"></SubHeader>-->
+  <div class="mine-address">
+    <nav-header class="header" title="收货地址"></nav-header>
     <div class='main'>
       <div class='list' v-for="(item,index) in address" :key="index"
            @click="$router.push('/mine/address/mod?aid='+item.aid)">
@@ -22,6 +22,7 @@
   import { mapActions, mapState } from 'vuex'
 
   export default {
+    name: 'mine-address',
     created () {
       this.$utils.safeUser(this)
       this.getAddress()
@@ -42,82 +43,69 @@
   }
 </script>
 
-<style scoped>
-  .page {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #FFFFFF;
-    overflow: hidden;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .mine-address
+    width: 100%
+    min-height: 100vh
+    background-color: $color-background
+    overflow: hidden
 
-  .main {
-    width: 100%;
-    margin-top: 1.02rem;
-  }
+    .main
+      width: 90%
+      margin 0 auto
+      margin-top: 10px
+      font-size: $font-size-small
 
-  .list {
-    width: 100%;
-    height: 1.2rem;
-    border-bottom: #EFEFEF 1px solid;
-    position: relative;
-    z-index: 1;
-  }
+      .list
+        width: 100%
+        height: 50px
+        border-bottom: 1px solid $color-text-ll
+        position: relative
 
-  .list .name-wrap {
-    width: auto;
-    height: auto;
-    position: absolute;
-    left: 3%;
-    top: 0.2rem;
-    z-index: 1;
-    font-size: 0.28rem;
-  }
+        .name-wrap
+          width: auto
+          height: auto
+          position: absolute
+          left: 3%
+          top: 0.2rem
 
-  .list .name-wrap span {
-    padding-right: 0.3rem;
-  }
+          span
+            padding-right: 0.3rem
 
-  .list .address {
-    width: auto;
-    height: auto;
-    font-size: 0.24rem;
-    position: absolute;
-    z-index: 1;
-    left: 3%;
-    top: 0.7rem;
-  }
+        .address
+          width: auto
+          height: auto
+          position: absolute
+          left: 3%
+          top: 0.7rem
 
-  .list .address span {
-    color: #FDB709
-  }
+          span
+            color: $color-theme
 
-  .list .right-arrow {
-    width: 0.3rem;
-    height: 0.3rem;
-    background-image: url("../../../assets/images/common/right_arrow.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: absolute;
-    z-index: 1;
-    right: 3%;
-    top: 0.45rem;
-  }
+        .right-arrow
+          width: 0.3rem
+          height: 0.3rem
+          background-image: url("../../../assets/images/common/right_arrow.png")
+          background-size: 100%
+          background-repeat: no-repeat
+          background-position: center
+          position: absolute;
+          right: 3%
+          top: 0.45rem
 
-  .add-btn {
-    width: 80%;
-    height: 0.8rem;
-    background-color: #EB1625;
-    position: fixed;
-    z-index: 2;
-    bottom: 0.4rem;
-    left: 50%;
-    border-radius: 4px;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    color: #FFFFFF;
-    font-size: 0.28rem;
-    text-align: center;
-    line-height: 0.8rem;
-  }
+    .add-btn
+      width: 80%
+      height: 36px
+      line-height 36px
+      background-color: #EB1625
+      position: fixed;
+      z-index: 2;
+      bottom: 20px
+      left: 50%
+      border-radius: 5px
+      transform: translateX(-50%)
+      color: $color-background
+      font-size $font-size-medium-x
+      text-align: center
 </style>

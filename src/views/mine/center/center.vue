@@ -1,9 +1,10 @@
 <template>
   <div class="center">
-    <div class="header">
-      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>
-      <div class="title">个人中心</div>
-    </div>
+    <!--    <div class="header">-->
+    <!--      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>-->
+    <!--      <div class="title">个人中心</div>-->
+    <!--    </div>-->
+    <nav-header class="header" title="个人中心"></nav-header>
     <div class='user-info-wrap'>
       <div class='head'>
         <img :src="head?head:require('../../../assets/images/user/my/default-head.png')" alt=""/>
@@ -77,6 +78,21 @@
         this.$router.push(url)
       },
       outLogin () {
+        this.$createDialog({
+          type: 'confirm',
+          content: '确认要退出吗？',
+          confirmBtn: {
+            text: '确定',
+            href: 'javascript:;'
+          },
+          cancelBtn: {
+            text: '取消',
+            href: 'javascript:;'
+          },
+          onConfirm: () => {
+            this.asyncOutLogin()
+          }
+        }).show()
         // Dialog.confirm({
         //   title: '',
         //   message: '确认要退出吗？'
@@ -137,7 +153,7 @@
       position: relative
       z-index: 1
       color: $color-background
-      font-size: $font-size-small
+      font-size: $font-size-medium
 
       .head
         width: 50px

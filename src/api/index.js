@@ -1,4 +1,4 @@
-import { request } from './helper'
+import { request } from './request'
 import { URL, TOKEN } from '../assets/js/conf/config'
 
 export function getNavsData() {

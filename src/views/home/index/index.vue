@@ -77,7 +77,8 @@
         navs: 'index/navs',
         swipers: 'index/swipers',
         goods: 'index/goods',
-        recomGoods: 'index/recomGoods'
+        recomGoods: 'index/recomGoods',
+        isLogin: 'user/isLogin'
       })
     },
     mounted () {
@@ -97,13 +98,18 @@
         }
       },
       onLeftClick () {
-        this.$router.push('/map')
+        this.$router.push('/home/map')
       },
       onCenterClick () {
         this.$router.push('/home/search')
       },
-      onRightClick () {
-        this.$router.replace('/login')
+      onRightClick (val) {
+        console.log(val)
+        if (val) {
+          this.$router.replace('/mine')
+        } else {
+          this.$router.replace('/login')
+        }
       }
     },
     beforeRouteUpdate (to, from, next) {

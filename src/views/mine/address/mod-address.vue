@@ -1,6 +1,6 @@
 <template>
-  <div class="page">
-    <!--    <SubHeader title="修改收货地址" right-text="删除" @submit="delAddress()"></SubHeader>-->
+  <div class="mod-address">
+    <nav-header class="header" title="修改收货地址"></nav-header>
     <div class='main'>
       <ul>
         <li>收货人</li>
@@ -24,7 +24,8 @@
         <li>设置为默认地址</li>
         <li><input type="checkbox" v-model="isDefault"/></li>
       </ul>
-      <cube-button type="submit" class='submit-save' @click="submit()">修改</cube-button>
+      <div class='submit-save' @click="submit()">修改</div>
+      <div class='submit-del' @click="delAddress()">删除</div>
     </div>
     <!--    <van-popup v-model="isArea">-->
     <!--      <van-area :area-list="areaList" @cancel="isArea=false" @confirm="selectArea"/>-->
@@ -131,25 +132,11 @@
                   onTimeout: () => {
                     this.$router.go(-1)
                   }
-                })
+                }).show()
               }
             }
           })
         }
-      },
-      // 选择所在地区
-      selectArea (val) {
-        this.isArea = false
-        const tmpVal = []
-        if (val.length > 0) {
-          for (let i = 0; i < val.length; i++) {
-            tmpVal.push(val[i].name)
-          }
-          this.province = tmpVal[0]
-          this.city = tmpVal[1]
-          this.area = tmpVal[2]
-        }
-        this.showArea = tmpVal.join(' ')
       },
       // 删除收货地址
       delAddress () {
@@ -191,103 +178,66 @@
   }
 </script>
 
-<style scoped>
-  .sub-header {
-    width: 100%;
-    height: 1rem;
-    background-color: #FFFFFF;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-    border-bottom: 1px solid #EFEFEF;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-  }
+<style lang="stylus" scoped>
+  @import '~@assets/css/variable.styl'
+  .mod-address
+    width: 100%
+    height: 100vh
+    overflow: hidden
+    background-color: $color-background
+    font-size $font-size-medium
 
-  .sub-header .back {
-    width: 0.8rem;
-    height: 0.8rem;
-    background-image: url("../../../assets/images/home/goods/back.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+    .main
+      width: 90%
+      margin 0 auto
+      margin-top: 10px
 
-  .sub-header .title {
-    width: 79%;
-    height: auto;
-    font-size: 0.32rem;
-    text-align: center;
-  }
+      ul
+        width: 100%
+        height 40px
+        line-height 40px
+        border-bottom: 1px solid $color-text-ll
+        display: flex
+        align-items: center
 
-  .sub-header .right-btn {
-    width: auto;
-    height: auto;
-    font-size: 0.32rem;
-  }
+        li
+          margin-left: 10px
+          display flex
+          flex-direction column
+          justify-content center
 
-  .page {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #FFFFFF;
-  }
+          &:nth-child(2)
+            width: 62%
+            height: 100%
 
-  .main {
-    width: 100%;
-    margin-top: 1rem;
-  }
+          input[type='text']
+            width: 100%
+            height: 95%
+            font-size $font-size-small
 
-  .main ul {
-    width: 100%;
-    height: 1.02rem;
-    border-bottom: #EFEFEF 1px solid;
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-  }
+          input[type='checkbox']
+            width: 15px
+            height: 15px
 
-  .main ul li {
-    font-size: 0.32rem;
-    margin-left: 0.3rem;
-  }
+      .submit-save
+        width: 80%
+        height: 30px
+        line-height 30px
+        text-align center
+        background-color: $color-theme
+        border-radius: 5px
+        margin: 0 auto
+        color: $color-background
+        margin-top: 0.4rem
 
-  .main ul li:nth-child(2) {
-    width: 62%;
-    height: 100%;
-  }
-
-  .main ul li input[type='text'] {
-    width: 100%;
-    height: 95%;
-    font-size: 0.32rem;
-  }
-
-  .main ul li .area {
-    font-size: 0.28rem !important;
-  }
-
-  .main ul li input[type='checkbox'] {
-    width: 0.4rem;
-    height: 0.4rem;
-    margin-top: 0.3rem;
-  }
-
-  .main .submit-save {
-    width: 85%;
-    height: 0.8rem;
-    background-color: #FCB40A;
-    border-radius: 4px;
-    margin: 0 auto;
-    display: block;
-    border: 0 none;
-    outline: none;
-    font-size: 0.32rem;
-    color: #FFFFFF;
-    margin-top: 0.4rem;
-  }
+      .submit-del
+        width: 80%
+        height: 30px
+        line-height 30px
+        text-align center
+        background-color: $color-text-ll
+        border-radius: 5px
+        margin: 0 auto
+        color: $color-text-l
+        margin-top: 0.4rem
 </style>

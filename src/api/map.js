@@ -1,4 +1,4 @@
-import { request } from './helper'
+import { request } from './request'
 import { BAIDU_URL } from '../assets/js/conf/config'
 
 // 百度地图逆地理编码接口
