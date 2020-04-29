@@ -1,12 +1,12 @@
 <template>
   <div class="order">
-<!--    <div class="header">-->
-<!--      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>-->
-<!--      <div class="title">订单管理</div>-->
-<!--    </div>-->
+    <!--    <div class="header">-->
+    <!--      <div class="back iconfont icon-arrow-right-copy-copy-copy-copy" @click="$router.go(-1)"></div>-->
+    <!--      <div class="title">订单管理</div>-->
+    <!--    </div>-->
     <nav-header title="确认订单"></nav-header>
     <div class='main'>
-      <div class='address-wrap' @click="$router.push('/mine/address')">
+      <div class='address-wrap' @click="$router.push('/home/address')">
         <div class='persion-info' v-show="name?true:false">
           <span>收货人：{{name}}</span><span>{{cellphone}}</span>
         </div>
@@ -70,7 +70,7 @@
 
   export default {
     name: 'order',
-    data () {
+    data() {
       return {
         aid: sessionStorage.addsid,
         name: '',
@@ -86,7 +86,7 @@
         total: 'cart/total',
         freight: 'cart/freight'
       }),
-      newCartData () {
+      newCartData() {
         if (this.cartData.length > 0) {
           const data = this.cartData.filter(item => {
             return item.checked
@@ -97,7 +97,7 @@
         }
       }
     },
-    created () {
+    created() {
       this.$utils.safeUser(this)
       this.isSubmit = true
       if (this.aid) {
@@ -120,7 +120,7 @@
         })
       }
     },
-    mounted () {
+    mounted() {
       document.title = this.$route.meta.title
     },
     methods: {
@@ -130,7 +130,7 @@
         addOrder: 'order/addOrder'
       }),
       // 提交订单
-      submitOrder () {
+      submitOrder() {
         if (this.total > 0) {
           if (this.isSubmit) {
             this.isSubmit = false
@@ -267,10 +267,12 @@
         background-color $color-background
         position relative
         z-index 11
+
         .goods-content
           width 100%
           min-height 510px
           padding-top 20px
+
           .goods-list
             width: 100%
             height: 2rem
@@ -279,37 +281,46 @@
             display: -webkit-flex
             align-items: center
             margin-bottom: 20px
+
             &.last-child
               margin-bottom 50px
+
             .image
               width: 50px
               height: 50px
               margin-right: 10px
+
               img
                 width: 100%
                 height: 100%
+
             .goods-param
               width: 75%
+
             .title
               width: 100%
               height: 15px
               overflow: hidden
               font-size: $font-size-small
               no-wrap()
+
             .attr
               width: 100%
               height: 12px
               font-size: $font-size-small-s
               margin-top: 5px
-              color:$color-text-l
+              color: $color-text-l
+
               span
                 padding-right: 10px
+
             .amount
               font-size: $font-size-small-s
-              color:$color-text-l
+              color: $color-text-l
               margin-top: 5px
+
             .price
-              font-size:  $font-size-small-s
+              font-size: $font-size-small-s
               color: $color-theme
               margin-top: 5px
 
@@ -319,10 +330,13 @@
         display: flex
         justify-content: flex-end
         margin-bottom: 10px
+
         &:last-child
           margin-bottom: 50px
+
         li
           margin-right 10px
+
           &:nth-child(2)
             color: $color-theme
 

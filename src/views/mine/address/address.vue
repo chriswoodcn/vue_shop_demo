@@ -23,11 +23,11 @@
 
   export default {
     name: 'mine-address',
-    created () {
+    created() {
       this.$utils.safeUser(this)
       this.getAddress()
     },
-    mounted () {
+    mounted() {
       document.title = this.$route.meta.title
     },
     computed: {

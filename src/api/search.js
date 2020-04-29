@@ -2,12 +2,12 @@ import { request } from './request'
 import { URL, TOKEN } from '../assets/js/conf/config'
 
 // 热门搜索
-export function getHotKeywordData() {
-  return request(URL + '/home/public/hotwords?token=' + TOKEN)
+export function getHotKeywordData () {
+  return request({ url: URL + '/home/public/hotwords?token=' + TOKEN })
 }
 
 // 搜索商品结果
-export function getSearchData(data) {
+export function getSearchData (data) {
   const kwords = data.keyword ? data.keyword : ''
   const page = data.page ? data.page : 1
   const otype = data.otype ? data.otype : 'all'
@@ -34,10 +34,10 @@ export function getSearchData(data) {
     '&token=' +
     TOKEN
   // console.log(url);
-  return request(url)
+  return request({ url: url })
 }
 
 // 商品属性
-export function getAttrsData(keyword) {
-  return request(URL + '/home/goods/param?kwords=' + keyword + '&token=' + TOKEN)
+export function getAttrsData (keyword) {
+  return request({ url: URL + '/home/goods/param?kwords=' + keyword + '&token=' + TOKEN })
 }

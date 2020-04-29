@@ -3,12 +3,12 @@ import axios from 'axios'
 
 const load = document.querySelector('.load')
 
-export function request (config = {}) {
+export function request(config = {}) {
   load.style.display = 'block'
   return axiosRequest(config)
 }
 
-function axiosRequest (config = {}) {
+function axiosRequest(config = {}) {
   let url = config.url
   let method = config.method || 'get'
   let data = config.data

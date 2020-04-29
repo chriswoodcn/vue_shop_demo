@@ -48,7 +48,6 @@
 </template>
 
 <script>
-  // 东丽湖阅湖苑6号楼
   import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
   import { BmNavigation, BmLocalSearch, BmMarker, BmInfoWindow, BmGeolocation } from 'vue-baidu-map'
   import { mapMutations } from 'vuex'
@@ -56,7 +55,7 @@
 
   export default {
     name: 'baidumap',
-    data () {
+    data() {
       return {
         map: {
           center: {
@@ -89,7 +88,7 @@
       BmMarker,
       BmInfoWindow
     },
-    created () {
+    created() {
       // https的域名才支持了,浏览器自带的定位
       // if (navigator.geolocation) {
       //   navigator.geolocation.getCurrentPosition((pos) => {
@@ -119,17 +118,18 @@
     },
     methods: {
       ...mapMutations({ setAddress: 'user/SET_USERADDRESS' }),
-      mapReady ({ Bmap, map }) {
+      mapReady({ Bmap, map }) {
         this.map.center = '北京'
         this.map.zoom = 15
       },
-      mapClick ({ point }) {
+      mapClick({ point }) {
         this.formatted_address = ''
         this.markerPoint = point
         this.infoWindowOpen()
         // 根据坐标转位置信息
         getLocationInfo(this.markerPoint).then(res => {
-          console.log(res)
+          // console.log(11111111111111111111)
+          // console.log(res)
           if (res.status === 0) {
             this.formatted_address = res.result.formatted_address
             this.results.province = res.result.addressComponent.province
@@ -140,7 +140,7 @@
             }
             this.results.lists = []
             this.results.lists.push(listItem)
-            console.log(this.results)
+            // console.log(this.results)
           } else {
             this.$createToast(
               {
@@ -151,12 +151,12 @@
           }
         })
       },
-      searchClick () {
+      searchClick() {
         if (this.searchWord.trim()) {
           this.keyword = this.searchWord.trim()
         }
       },
-      searchcomplete (results) {
+      searchcomplete(results) {
         console.log(results)
         if (results === undefined || results.Ir.length <= 0) {
           this.$createToast({
@@ -169,17 +169,17 @@
         this.$set(this.results, 'city', results.city || '')
         this.$set(this.results, 'lists', results.Ir || '')
       },
-      handlerAddressChoose ({ title, address }) {
+      handlerAddressChoose({ title, address }) {
         this.setAddress({
           title,
           address
         })
         this.$router.replace('/home')
       },
-      infoWindowClose () {
+      infoWindowClose() {
         this.show = false
       },
-      infoWindowOpen () {
+      infoWindowOpen() {
         this.show = true
       }
     }

@@ -82,6 +82,11 @@ const routes = [
         name: 'order-end',
         component: () => import(/* webpackChunkName: "home-order" */'@/views/home/order/order-end.vue'),
         meta: { title: '完成订单' }
+      },
+      {
+        path: 'address',
+        name: 'home-address',
+        component: () => import(/* webpackChunkName: "home-address" */'@/views/home/address/address.vue')
       }
     ]
   },
@@ -94,17 +99,17 @@ const routes = [
       {
         path: 'item',
         name: 'details-item',
-        component: () => import(/* webpackChunkName: "details" */'@/components/home/goods/details_item.vue')
+        component: () => import(/* webpackChunkName: "details-item" */'@/components/home/goods/details_item.vue')
       },
       {
         path: 'content',
         name: 'details-content',
-        component: () => import(/* webpackChunkName: "details" */'@/components/home/goods/details_content.vue')
+        component: () => import(/* webpackChunkName: "details-content" */'@/components/home/goods/details_content.vue')
       },
       {
         path: 'review',
         name: 'details-review',
-        component: () => import(/* webpackChunkName: "details" */'@/components/home/goods/details_review.vue')
+        component: () => import(/* webpackChunkName: "details-review" */'@/components/home/goods/details_review.vue')
       }
     ]
   },
@@ -239,7 +244,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL, // 自动获取根目录路径
   scrollBehavior: (to, from, pos) => {
     return (
